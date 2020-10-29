@@ -15,6 +15,7 @@
 		D73B9D4C25221A3E0037FD9C /* LanguageWordBuilder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D73B9D4A25221A3E0037FD9C /* LanguageWordBuilder.xcdatamodeld */; };
 		D73B9D5725221A3E0037FD9C /* LanguageWordBuilderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73B9D5625221A3E0037FD9C /* LanguageWordBuilderTests.swift */; };
 		D73B9D6225221A3E0037FD9C /* LanguageWordBuilderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73B9D6125221A3E0037FD9C /* LanguageWordBuilderUITests.swift */; };
+		D7AC9A84252B5EEF00048DE7 /* Words.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7AC9A83252B5EEF00048DE7 /* Words.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		D73B9D5D25221A3E0037FD9C /* LanguageWordBuilderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LanguageWordBuilderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D73B9D6125221A3E0037FD9C /* LanguageWordBuilderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageWordBuilderUITests.swift; sourceTree = "<group>"; };
 		D73B9D6325221A3E0037FD9C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D7AC9A83252B5EEF00048DE7 /* Words.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Words.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				D73B9D3F25221A3B0037FD9C /* LanguageWordBuilderApp.swift */,
+				D7AC9A83252B5EEF00048DE7 /* Words.swift */,
 				D73B9D4125221A3B0037FD9C /* ContentView.swift */,
 				D73B9D4325221A3E0037FD9C /* Assets.xcassets */,
 				D73B9D4825221A3E0037FD9C /* Persistence.swift */,
@@ -269,6 +272,7 @@
 				D73B9D4225221A3B0037FD9C /* ContentView.swift in Sources */,
 				D73B9D4C25221A3E0037FD9C /* LanguageWordBuilder.xcdatamodeld in Sources */,
 				D73B9D4025221A3B0037FD9C /* LanguageWordBuilderApp.swift in Sources */,
+				D7AC9A84252B5EEF00048DE7 /* Words.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
