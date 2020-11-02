@@ -16,7 +16,7 @@ let wordSource = [
 	"hello", "hola",
 	"dog", "perro",
 	"cat", "gato",
-	"goodbye", "adiós"
+	"bye", "adiós"
 ]
 
 var words: [Word] = {

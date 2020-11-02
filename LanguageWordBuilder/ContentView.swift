@@ -11,6 +11,7 @@ import CoreData
 
 struct ContentView: View {
 	@State var wordIndex: Int = 0
+	@State var scrambledWords: [Word] = []
 	@State var scrambledLetters: [String] = []
 	@State var isSelected: [Bool] = []
 	@State var currentAnswer = ""
@@ -24,23 +25,39 @@ struct ContentView: View {
 		currentAnswer = ""
 	}
 	
-	func scramble() {
-		print("scrambled")
-		currentAnswer = ""
+	func scrambleWords() {
+		print("scrambling words")
+		self.scrambledWords = words.shuffled()
+	}
+	
+	func scrambleLetters() {
+		print("scrambling letters from \(scrambledWords[wordIndex].native)")
+		var wordIsNotScrambled = true
 		var isSelected: [Bool] = []
 		var scrambledLetters: [String] = []
-		for letter in words[wordIndex].native {
-			scrambledLetters.append(String(letter))
-			isSelected.append(false)
+		while wordIsNotScrambled {
+			currentAnswer = ""
+			scrambledLetters = []
+			isSelected = []
+			for letter in scrambledWords[wordIndex].native {
+				scrambledLetters.append(String(letter))
+				isSelected.append(false)
+			}
+			scrambledLetters = scrambledLetters.shuffled()
+			wordIsNotScrambled = scrambledWords[wordIndex].native == scrambledLetters.joined()
+			if wordIsNotScrambled {
+				print("letters not scrambled")
+			}
 		}
-		self.scrambledLetters = scrambledLetters.shuffled()
 		self.isSelected = isSelected
+		self.scrambledLetters = scrambledLetters
+		print("scrambling letters to \(scrambledLetters.joined())")
 	}
 	
 	var body: some View {
 		HStack {
 			VStack {
-				Text(words[wordIndex].foreign)
+//				Text(scrambledWords[wordIndex].foreign)
 				Spacer()
 				VStack {
 					ForEach(0..<scrambledLetters.count, id: \.self) { index in
@@ -51,9 +68,13 @@ struct ContentView: View {
 								isSelected[index] = true
 								currentAnswer += scrambledLetters[index]
 							}
-							if currentAnswer == words[wordIndex].native {
+							if currentAnswer == scrambledWords[wordIndex].native {
 								wordIndex += 1
-								scramble()
+								if wordIndex >= scrambledWords.count {
+									wordIndex = 0
+									scrambleWords()
+								}
+								scrambleLetters()
 							}
 						}) {
 							Text(scrambledLetters[index])
@@ -70,16 +91,18 @@ struct ContentView: View {
 								)
 						}
 					}
-						Text(currentAnswer)
+					Text(currentAnswer)
 				}
 				Spacer()
 			}
 		}
 		.onAppear() {
-			scramble()
+			scrambleWords()
+			scrambleLetters()
 		}
 	}
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
