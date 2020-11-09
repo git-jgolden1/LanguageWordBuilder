@@ -18,7 +18,7 @@ let wordSource = [
 	"cat", "gato",
 	"woman", "mujer",
 	"man", "hombre",
-//	"excellently", "excelentemente",
+	"excellently", "excelentemente",
 	"goodbye", "adiós"
 ]
 

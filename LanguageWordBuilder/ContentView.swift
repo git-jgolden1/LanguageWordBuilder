@@ -4,13 +4,14 @@
 //
 //  Created by Jonathan Gurr on 28-09-20.
 //
-/* Goals for today:
--Put foreign word on top of screen each time.
--Add multiletter buttons if word is over 5 letters. (goodbye)
--Add multicolumn buttons if word is over 10 letters. (
+/* Goals for 11-16-20:
+-Button color change for selected buttons
+-Multiple letters in buttons if word length exceeds 10
 */
 import SwiftUI
 import CoreData
+
+let numberOfColumns = 3
 
 struct ContentView: View {
 	@State var wordIndex: Int = 0
@@ -61,7 +62,7 @@ struct ContentView: View {
 			Spacer()
 			HStack {
 				Spacer()
-				ForEach(0..<2) { column in
+				ForEach(0 ..< numberOfColumns) { column in
 					VStack {
 						Spacer()
 						ForEach(
@@ -114,7 +115,7 @@ struct ContentView: View {
 		}
 	}
 	func columnStart(_ column: Int) -> Int {
-		return scrambledLetters.count * column / 2
+		return scrambledLetters.count * column / numberOfColumns
 	}
 }
 
