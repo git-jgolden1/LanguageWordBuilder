@@ -8,6 +8,7 @@
 -Button color change for selected buttons
 -Multiple letters in buttons if word length exceeds 10
 */
+//bash message macro made
 import SwiftUI
 import CoreData
 
