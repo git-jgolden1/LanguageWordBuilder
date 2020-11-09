@@ -4,18 +4,20 @@
 //
 //  Created by Jonathan Gurr on 28-09-20.
 //
-
+/* Goals for today:
+-Put foreign word on top of screen each time.
+-Add multiletter buttons if word is over 5 letters. (goodbye)
+-Add multicolumn buttons if word is over 10 letters. (
+*/
 import SwiftUI
 import CoreData
 
-
 struct ContentView: View {
 	@State var wordIndex: Int = 0
-	@State var scrambledWords: [Word] = []
+	@State var scrambledWords: [Word] = [words[0]]
 	@State var scrambledLetters: [String] = []
 	@State var isSelected: [Bool] = []
 	@State var currentAnswer = ""
-	let test = "1,2,3,4"
 	init() {
 		print("ContentView.init")
 	}
@@ -45,9 +47,6 @@ struct ContentView: View {
 			}
 			scrambledLetters = scrambledLetters.shuffled()
 			wordIsNotScrambled = scrambledWords[wordIndex].native == scrambledLetters.joined()
-			if wordIsNotScrambled {
-				print("letters not scrambled")
-			}
 		}
 		self.isSelected = isSelected
 		self.scrambledLetters = scrambledLetters
@@ -55,57 +54,74 @@ struct ContentView: View {
 	}
 	
 	var body: some View {
-		HStack {
-			VStack {
-//				Text(scrambledWords[wordIndex].foreign)
+		VStack {
+			Spacer()
+			Text(scrambledWords[wordIndex].foreign)
+				.font(.title)
+			Spacer()
+			HStack {
 				Spacer()
-				VStack {
-					ForEach(0..<scrambledLetters.count, id: \.self) { index in
-						Button(action: {
-							if isSelected[index] {
-								resetAnswer()
-							} else {
-								isSelected[index] = true
-								currentAnswer += scrambledLetters[index]
-							}
-							if currentAnswer == scrambledWords[wordIndex].native {
-								wordIndex += 1
-								if wordIndex >= scrambledWords.count {
-									wordIndex = 0
-									scrambleWords()
+				ForEach(0..<2) { column in
+					VStack {
+						Spacer()
+						ForEach(
+							columnStart(column)
+								..<
+								columnStart(column + 1),
+							id: \.self) { index in
+							Button(action: {
+								if isSelected[index] {
+									resetAnswer()
+								} else {
+									isSelected[index] = true
+									currentAnswer += scrambledLetters[index]
 								}
-								scrambleLetters()
-							}
-						}) {
-							Text(scrambledLetters[index])
-								.fontWeight(.bold)
-								.font(.subheadline)
-								.padding(12)
-								.background(Color.purple)
-								.cornerRadius(30)
-								.foregroundColor(.white)
-								.padding(12)
-								.overlay(
-									RoundedRectangle(cornerRadius: 30)
-										.stroke(Color.purple, lineWidth: 5)
-								)
-						}
-					}
-					Text(currentAnswer)
-				}
-				Spacer()
-			}
-		}
+								if currentAnswer == scrambledWords[wordIndex].native {
+									wordIndex += 1
+									if wordIndex >= scrambledWords.count {
+										wordIndex = 0
+										scrambleWords()
+									}
+									scrambleLetters()
+								}
+							}) {
+								Text(scrambledLetters[index])
+									.fontWeight(.bold)
+									.font(.subheadline)
+									.padding(12)
+									.background(Color.purple)
+									.cornerRadius(30)
+									.foregroundColor(.white)
+									.padding(12)
+									.overlay(
+										RoundedRectangle(cornerRadius: 30)
+											.stroke(Color.purple, lineWidth: 5)
+									)
+							} //end of button UI
+							Spacer()
+							} //end of inner ForEach
+					} //end of VStack
+					Spacer()
+				} //end of outer ForEach
+			} //end of column-HStack
+			Spacer()
+			Text(currentAnswer)
+			Spacer()
+		} //end of main VStack
 		.onAppear() {
 			scrambleWords()
 			scrambleLetters()
 		}
 	}
+	func columnStart(_ column: Int) -> Int {
+		return scrambledLetters.count * column / 2
+	}
 }
 
 
+
 struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-			ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
-    }
+	static var previews: some View {
+		ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+	}
 }
