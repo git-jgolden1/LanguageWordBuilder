@@ -5,19 +5,18 @@
 //  Created by Jonathan Gurr on 28-09-20.
 //
 /* Goals for 11-16-20:
--Button color change for selected buttons
 -Multiple letters in buttons if word length exceeds 10
 */
 
 import SwiftUI
 import CoreData
 
-let numberOfColumns = 3
 
 struct ContentView: View {
 	@State var wordIndex: Int = 0
 	@State var scrambledWords: [Word] = [words[0]]
 	@State var scrambledLetters: [String] = []
+	@State var numberOfColumns: Int = 1
 	@State var isSelected: [Bool] = []
 	@State var currentAnswer = ""
 	init() {
@@ -91,14 +90,14 @@ struct ContentView: View {
 									Text(scrambledLetters[index])
 										.fontWeight(.bold)
 										.font(.subheadline)
-										.padding(12)
+										.padding(6)
 										.background(Color.blue)
-										.cornerRadius(30)
+										.cornerRadius(24)
 										.foregroundColor(.white)
-										.padding(12)
+										.padding(6)
 										.overlay(
-											RoundedRectangle(cornerRadius: 30)
-												.stroke(Color.blue, lineWidth: 5)
+											RoundedRectangle(cornerRadius: 24)
+												.stroke(Color.blue, lineWidth: 3)
 										)
 								} //end of button UI
 								if isSelected[index] {
