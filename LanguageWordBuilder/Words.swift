@@ -19,7 +19,7 @@ let wordSource = [
 	"woman", "mujer",
 	"man", "hombre",
 	"excellently", "excelentemente",
-	"goodbye", "adiós"
+	"goodbye", "adiós",
 ]
 
 var words: [Word] = {

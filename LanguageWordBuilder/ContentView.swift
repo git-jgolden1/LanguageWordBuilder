@@ -16,9 +16,10 @@ struct ContentView: View {
 	@State var wordIndex: Int = 0
 	@State var scrambledWords: [Word] = [words[0]]
 	@State var scrambledLetters: [String] = []
-	@State var numberOfColumns: Int = 1
 	@State var isSelected: [Bool] = []
+	@State var numberOfColumns: Int = 1
 	@State var currentAnswer = ""
+	@State var version = 1
 	init() {
 		print("ContentView.init")
 	}
@@ -31,6 +32,7 @@ struct ContentView: View {
 	func scrambleWords() {
 		print("scrambling words")
 		self.scrambledWords = words.shuffled()
+//		scrambledWords = words
 	}
 	
 	func scrambleLetters() {
@@ -54,6 +56,17 @@ struct ContentView: View {
 		print("scrambling letters to \(scrambledLetters.joined())")
 	}
 	
+	func updateColumns() {
+		let dividing: Double = Double(scrambledLetters.count) / 7
+		let extractedCeil: Double = ceil(dividing)
+		numberOfColumns = Int(extractedCeil)
+		refresh()
+	}
+	
+	func refresh() {
+		version += 1
+	}
+	
 	var body: some View {
 		VStack {
 			Spacer()
@@ -62,7 +75,7 @@ struct ContentView: View {
 			Spacer()
 			HStack {
 				Spacer()
-				ForEach(0 ..< numberOfColumns) { column in
+				ForEach(0 ..< numberOfColumns, id: \.self) { column in
 					VStack {
 						Spacer()
 						ForEach(
@@ -85,6 +98,7 @@ struct ContentView: View {
 											scrambleWords()
 										}
 										scrambleLetters()
+										updateColumns()
 									}
 								}) {
 									Text(scrambledLetters[index])
@@ -113,19 +127,19 @@ struct ContentView: View {
 			} //end of column-HStack
 			Spacer()
 			Text(currentAnswer)
+				.font(.title)
 			Spacer()
 		} //end of main VStack
 		.onAppear() {
 			scrambleWords()
 			scrambleLetters()
+			updateColumns()
 		}
 	}
 	func columnStart(_ column: Int) -> Int {
 		return scrambledLetters.count * column / numberOfColumns
 	}
 }
-
-
 
 struct ContentView_Previews: PreviewProvider {
 	static var previews: some View {
