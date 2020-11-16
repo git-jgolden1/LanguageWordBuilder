@@ -8,7 +8,7 @@
 -Button color change for selected buttons
 -Multiple letters in buttons if word length exceeds 10
 */
-//bash message macro made
+
 import SwiftUI
 import CoreData
 
@@ -71,37 +71,43 @@ struct ContentView: View {
 								..<
 								columnStart(column + 1),
 							id: \.self) { index in
-							Button(action: {
-								if isSelected[index] {
-									resetAnswer()
-								} else {
-									isSelected[index] = true
-									currentAnswer += scrambledLetters[index]
-								}
-								if currentAnswer == scrambledWords[wordIndex].native {
-									wordIndex += 1
-									if wordIndex >= scrambledWords.count {
-										wordIndex = 0
-										scrambleWords()
+							ZStack {
+								Button(action: {
+									if isSelected[index] {
+										resetAnswer()
+									} else {
+										isSelected[index] = true
+										currentAnswer += scrambledLetters[index]
 									}
-									scrambleLetters()
+									if currentAnswer == scrambledWords[wordIndex].native {
+										wordIndex += 1
+										if wordIndex >= scrambledWords.count {
+											wordIndex = 0
+											scrambleWords()
+										}
+										scrambleLetters()
+									}
+								}) {
+									Text(scrambledLetters[index])
+										.fontWeight(.bold)
+										.font(.subheadline)
+										.padding(12)
+										.background(Color.blue)
+										.cornerRadius(30)
+										.foregroundColor(.white)
+										.padding(12)
+										.overlay(
+											RoundedRectangle(cornerRadius: 30)
+												.stroke(Color.blue, lineWidth: 5)
+										)
+								} //end of button UI
+								if isSelected[index] {
+									Text("X")
+										.font(.largeTitle)
 								}
-							}) {
-								Text(scrambledLetters[index])
-									.fontWeight(.bold)
-									.font(.subheadline)
-									.padding(12)
-									.background(Color.purple)
-									.cornerRadius(30)
-									.foregroundColor(.white)
-									.padding(12)
-									.overlay(
-										RoundedRectangle(cornerRadius: 30)
-											.stroke(Color.purple, lineWidth: 5)
-									)
-							} //end of button UI
+							} //end of ZStack
 							Spacer()
-							} //end of inner ForEach
+						} //end of inner ForEach
 					} //end of VStack
 					Spacer()
 				} //end of outer ForEach
