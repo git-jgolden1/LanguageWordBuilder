@@ -1,2 +1,5 @@
 # unix swap file
 *.sw*
+*.xcodeproj
+.DS_Store
+project.pbxproj
