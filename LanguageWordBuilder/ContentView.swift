@@ -4,13 +4,12 @@
 //
 //  Created by Jonathan Gurr on 28-09-20.
 //
-/* Goals for 11-16-20:
--Multiple letters in buttons if word length exceeds 10
+/* Goals for 11-22-20:
+-Support importing native and foreign word arrays
 */
 
 import SwiftUI
 import CoreData
-
 
 struct ContentView: View {
 	@State var wordIndex: Int = 0
@@ -32,7 +31,7 @@ struct ContentView: View {
 	func scrambleWords() {
 		print("scrambling words")
 		self.scrambledWords = words.shuffled()
-//		scrambledWords = words
+		//		scrambledWords = words
 	}
 	
 	func scrambleLetters() {
@@ -105,19 +104,19 @@ struct ContentView: View {
 										.fontWeight(.bold)
 										.font(.subheadline)
 										.padding(6)
-										.background(Color.blue)
+										.background(isSelected[index] ? Color.green : Color.black)
 										.cornerRadius(24)
 										.foregroundColor(.white)
 										.padding(6)
 										.overlay(
 											RoundedRectangle(cornerRadius: 24)
-												.stroke(Color.blue, lineWidth: 3)
+												.stroke(Color.black, lineWidth: 3)
 										)
 								} //end of button UI
-								if isSelected[index] {
-									Text("X")
-										.font(.largeTitle)
-								}
+								//								if isSelected[index] {
+								//									Text("X")
+								//										.font(.largeTitle)
+								//								}
 							} //end of ZStack
 							Spacer()
 						} //end of inner ForEach
@@ -128,6 +127,24 @@ struct ContentView: View {
 			Spacer()
 			Text(currentAnswer)
 				.font(.title)
+			Spacer()
+			Button(action: {
+				print("Skip button works!")
+				if wordIndex < words.count - 1 {
+					wordIndex += 1
+					scrambleLetters()
+					updateColumns()
+				} else {
+					wordIndex = 0
+					scrambleWords() //not completely necessary, only if you want words in different order in each cycle
+					scrambleLetters()
+					updateColumns()
+				}
+			}) {
+				Text("Skip")
+					.fontWeight(.bold)
+					.foregroundColor(Color.orange)
+			}
 			Spacer()
 		} //end of main VStack
 		.onAppear() {

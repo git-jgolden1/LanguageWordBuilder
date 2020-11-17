@@ -19,6 +19,8 @@ let wordSource = [
 	"woman", "mujer",
 	"man", "hombre",
 	"excellently", "excelentemente",
+	"light", "luz",
+	"darkness", "oscuridad",
 	"goodbye", "adiós",
 ]
 
