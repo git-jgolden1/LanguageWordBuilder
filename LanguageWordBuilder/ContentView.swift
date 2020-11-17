@@ -141,7 +141,7 @@ struct ContentView: View {
 					updateColumns()
 				}
 			}) {
-				Text("Skip")
+				Text("Skip ->")
 					.fontWeight(.bold)
 					.foregroundColor(Color.orange)
 			}

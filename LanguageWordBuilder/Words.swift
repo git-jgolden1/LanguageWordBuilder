@@ -14,6 +14,8 @@ struct Word: Hashable {
 
 let wordSource = [
 	"hello", "hola",
+	"yes","sí",
+	"no","no",
 	"dog", "perro",
 	"cat", "gato",
 	"woman", "mujer",
@@ -21,6 +23,9 @@ let wordSource = [
 	"excellently", "excelentemente",
 	"light", "luz",
 	"darkness", "oscuridad",
+	"day", "día",
+	"night", "noche",
+	"supercalifragilisticexpialidocious", "supercalifragilisticexpialidocious",
 	"goodbye", "adiós",
 ]
 
