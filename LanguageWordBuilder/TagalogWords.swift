@@ -20,6 +20,12 @@ let tagalogWordSource = [
 	"aso", "dog",
 	"pusa", "cat",
 	
+	"sumbrero", "hat",
+	"palda", "skirt",
+	"sapatos", "shoes",
+	"medyas", "socks",
+	"pantalon", "pants",
+	
 	"gatas", "milk",
 	"mangkok", "bowl",
 
@@ -43,6 +49,11 @@ let tagalogWordSource = [
 	"laki", "large",
 	"pila", "a line people are standing in",
 	"matangkad", "tall",
+	"pandak", "short (height)",
+	"lumiliko", "turning",
+	"dumideretso", "going straight",
+	"kanan", "right (direction)",
+	"kaliwa", "left (direction)",
 	
 	"buhok", "hair",
 	"ulo", "head",
@@ -60,6 +71,12 @@ let tagalogWordSource = [
 	"daliri", "finger",
 	"daliri ng paa", "toe",
 	
+	"pula", "red",
+	"itim", "black",
+	"asul", "blue",
+	"puti", "white",
+	"berde", "green",
+	
 	"nauuhaw", "thirsty",
 	"umiinom", "drinking",
 	"uminom", "drink",
@@ -71,10 +88,12 @@ let tagalogWordSource = [
 	"nakaupo", "sitting",
 	"nakatayo", "standing",
 	"pupunta", "going",
+	"nakasuot", "wearing",
 	
 	"numero", "number",
 	"unang", "first",
 	"ikalawang", "second",
+	"pangalawang", "second",
 	"katlong", "third",
 	"ika-apat", "fourth",
 
@@ -89,14 +108,14 @@ let tagalogWordSource = [
 	"siyam", "nine",
 	"sampu", "ten",
 	"labing isa", "eleven",
-	"labin dalawa", "twelve",
-	"labin tatlo", "thirteen",
+	"labing dalawa", "twelve",
+	"labing tatlo", "thirteen",
 	"labing apat", "fourteen",
-	"labin lima", "fifteen",
+	"labing lima", "fifteen",
 	"labing anim", "sixteen",
-	"labin pito", "seventeen",
-	"labin walo", "eighteen",
-	"labin siyam", "nineteen",
+	"labing pito", "seventeen",
+	"labing walo", "eighteen",
+	"labing siyam", "nineteen",
 	"dalawampu", "twenty",
 ]
 
