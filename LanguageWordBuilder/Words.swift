@@ -12,22 +12,7 @@ struct Word: Hashable {
 	let foreign: String
 }
 
-let wordSource = [
-	"hello", "hola",
-	"yes","sí",
-	"no","no",
-	"dog", "perro",
-	"cat", "gato",
-	"woman", "mujer",
-	"man", "hombre",
-	"excellently", "excelentemente",
-	"light", "luz",
-	"darkness", "oscuridad",
-	"day", "día",
-	"night", "noche",
-//	"supercalifragilisticexpialidocious", "supercalifragilisticexpialidocious",
-	"goodbye", "adiós",
-]
+let wordSource = tagalogWordSource
 
 var words: [Word] = {
 	var words = [Word]()
