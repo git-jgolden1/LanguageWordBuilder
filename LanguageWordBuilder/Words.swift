@@ -25,7 +25,7 @@ let wordSource = [
 	"darkness", "oscuridad",
 	"day", "día",
 	"night", "noche",
-	"supercalifragilisticexpialidocious", "supercalifragilisticexpialidocious",
+//	"supercalifragilisticexpialidocious", "supercalifragilisticexpialidocious",
 	"goodbye", "adiós",
 ]
 

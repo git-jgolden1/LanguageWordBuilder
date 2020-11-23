@@ -102,7 +102,7 @@ struct ContentView: View {
 								}) {
 									Text(scrambledLetters[index])
 										.fontWeight(.bold)
-										.font(.subheadline)
+										.font(.headline)
 										.padding(6)
 										.background(isSelected[index] ? Color.green : Color.black)
 										.cornerRadius(24)
