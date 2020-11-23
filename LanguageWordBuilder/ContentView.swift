@@ -102,12 +102,12 @@ struct ContentView: View {
 								}) {
 									Text(scrambledLetters[index])
 										.fontWeight(.bold)
-										.font(.subheadline)
-										.padding(6)
+										.font(.title)
+										.padding(10)
 										.background(isSelected[index] ? Color.green : Color.black)
 										.cornerRadius(24)
 										.foregroundColor(.white)
-										.padding(6)
+										.padding(10)
 										.overlay(
 											RoundedRectangle(cornerRadius: 24)
 												.stroke(Color.black, lineWidth: 3)
