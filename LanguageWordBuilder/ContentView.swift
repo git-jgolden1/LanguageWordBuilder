@@ -4,9 +4,6 @@
 //
 //  Created by Jonathan Gurr on 28-09-20.
 //
-/* Goals for 11-22-20:
--Support importing native and foreign word arrays
-*/
 
 import SwiftUI
 import CoreData
@@ -127,6 +124,7 @@ struct ContentView: View {
 			Spacer()
 			Text(currentAnswer)
 				.font(.title)
+				.frame(minHeight: 40)
 			Spacer()
 			Button(action: {
 				print("Skip button works!")

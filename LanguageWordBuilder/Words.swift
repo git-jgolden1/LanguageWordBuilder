@@ -17,7 +17,12 @@ let wordSource = tagalogWordSource
 var words: [Word] = {
 	var words = [Word]()
 	for i in 0 ..< wordSource.count / 2 {
-		words.append(Word(native: wordSource[i * 2], foreign: wordSource[i * 2 + 1]))
+		let wordListOrder: Bool = Int.random(in: 0...1) == 1 ? true : false
+		if wordListOrder {
+			words.append(Word(native: wordSource[i * 2], foreign: wordSource[i * 2 + 1]))
+		} else {
+			words.append(Word(native: wordSource[i * 2 + 1], foreign: wordSource[i * 2]))
+		}
 	}
 	return words
 }()
