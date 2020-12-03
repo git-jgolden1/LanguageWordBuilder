@@ -104,7 +104,7 @@ let tagalogWordSource = [
 	["pangalawang"], ["second"],
 	["katlong"], ["third"],
 	["ika-apat"], ["fourth"],
-	
+
 	["isa"], ["one"],
 	["dalawa"], ["two"],
 	["tatlo"], ["three"],
@@ -126,4 +126,3 @@ let tagalogWordSource = [
 	["labing siyam"], ["nineteen"],
 	["dalawampu"], ["twenty"],
 ]
-
