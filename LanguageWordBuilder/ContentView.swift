@@ -4,12 +4,14 @@
 //
 //  Created by Jonathan Gurr on 28-09-20.
 //
+// next goal: change name of word struct from foreign and native to question and answer
+
 
 import SwiftUI
 import CoreData
 
 struct ContentView: View {
-//	@State var wordIndex: Int = 0
+	//	@State var wordIndex: Int = 0
 	@State var currentWord = words[0]
 	@State var scrambledLetters: [String] = []
 	@State var isSelected: [Bool] = []
@@ -70,6 +72,18 @@ struct ContentView: View {
 		updateColumns()
 	}
 	
+	func selectLetter(_ absoluteIndex: Int) {
+		if isSelected[absoluteIndex] {
+			resetAnswer()
+		} else {
+			isSelected[absoluteIndex] = true
+			currentAnswer += scrambledLetters[absoluteIndex]
+		}
+		if currentAnswer == currentWord.native {
+			chooseNewWord()
+		}
+	}
+	
 	var body: some View {
 		VStack {
 			Spacer()
@@ -88,15 +102,7 @@ struct ContentView: View {
 							id: \.self) { index in
 							ZStack {
 								Button(action: {
-									if isSelected[index] {
-										resetAnswer()
-									} else {
-										isSelected[index] = true
-										currentAnswer += scrambledLetters[index]
-									}
-									if currentAnswer == currentWord.native {
-										chooseNewWord()
-									}
+									selectLetter(index)
 								}) {
 									Text(scrambledLetters[index])
 										.fontWeight(.bold)
@@ -111,10 +117,10 @@ struct ContentView: View {
 												.stroke(Color.black, lineWidth: 3)
 										)
 								} //end of button UI
-//								if isSelected[index] {
-//									Text("X")
-//										.font(.largeTitle)
-//								}
+								//								if isSelected[index] {
+								//									Text("X")
+								//										.font(.largeTitle)
+								//								}
 							} //end of ZStack
 							Spacer()
 						} //end of inner ForEach
@@ -126,20 +132,35 @@ struct ContentView: View {
 			Text(currentAnswer)
 				.font(.title)
 				.frame(minHeight: 40)
-			Spacer()
-			Button(action: {
-				print("Skip button works!")
-				chooseNewWord()
-			}) {
-				Text("Skip ->")
-					.fontWeight(.bold)
-					.foregroundColor(Color.orange)
-			}
-			Spacer()
+			HStack {
+				Spacer()
+				Button(action: {
+					print("Hint button works!")
+					let firstLetter = String(currentWord.native.first!)
+					let index = scrambledLetters.firstIndex(of: firstLetter)
+					resetAnswer()
+					selectLetter(index!)
+				}) {
+					Text("Hint")
+						.fontWeight(.bold)
+						.foregroundColor(Color.blue)
+				}
+				Spacer()
+				Button(action: {
+					print("Skip button works!")
+					chooseNewWord()
+				}) {
+					Text("Skip ->")
+						.fontWeight(.bold)
+						.foregroundColor(Color.orange)
+				}
+				Spacer()
+			} //end of HStack for bottom buttons
 		} //end of main VStack
 		.onAppear() {
 			chooseNewWord()
 		}
+		Spacer()
 	}
 	func columnStart(_ column: Int) -> Int {
 		return scrambledLetters.count * column / numberOfColumns
