@@ -50,6 +50,9 @@ struct ContentView: View {
 		let dividing: Double = Double(scrambledLetters.count) / 7
 		let extractedCeil: Double = ceil(dividing)
 		numberOfColumns = Int(extractedCeil)
+		if scrambledLetters.count > 3 && numberOfColumns == 1 {
+			numberOfColumns = 2
+		}
 		refresh()
 	}
 	
@@ -108,10 +111,10 @@ struct ContentView: View {
 												.stroke(Color.black, lineWidth: 3)
 										)
 								} //end of button UI
-								//								if isSelected[index] {
-								//									Text("X")
-								//										.font(.largeTitle)
-								//								}
+//								if isSelected[index] {
+//									Text("X")
+//										.font(.largeTitle)
+//								}
 							} //end of ZStack
 							Spacer()
 						} //end of inner ForEach
