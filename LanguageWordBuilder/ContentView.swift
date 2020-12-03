@@ -9,8 +9,8 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-	@State var wordIndex: Int = 0
-	@State var scrambledWords: [Word] = [words[0]]
+//	@State var wordIndex: Int = 0
+	@State var currentWord = words[0]
 	@State var scrambledLetters: [String] = []
 	@State var isSelected: [Bool] = []
 	@State var numberOfColumns: Int = 1
@@ -25,14 +25,8 @@ struct ContentView: View {
 		currentAnswer = ""
 	}
 	
-	func scrambleWords() {
-		print("scrambling words")
-		self.scrambledWords = words.shuffled()
-		//		scrambledWords = words
-	}
-	
 	func scrambleLetters() {
-		print("scrambling letters from \(scrambledWords[wordIndex].native)")
+		print("scrambling letters from \(currentWord.native)")
 		var wordIsNotScrambled = true
 		var isSelected: [Bool] = []
 		var scrambledLetters: [String] = []
@@ -40,12 +34,12 @@ struct ContentView: View {
 			currentAnswer = ""
 			scrambledLetters = []
 			isSelected = []
-			for letter in scrambledWords[wordIndex].native {
+			for letter in currentWord.native {
 				scrambledLetters.append(String(letter))
 				isSelected.append(false)
 			}
 			scrambledLetters = scrambledLetters.shuffled()
-			wordIsNotScrambled = scrambledWords[wordIndex].native == scrambledLetters.joined()
+			wordIsNotScrambled = currentWord.native == scrambledLetters.joined()
 		}
 		self.isSelected = isSelected
 		self.scrambledLetters = scrambledLetters
@@ -63,10 +57,20 @@ struct ContentView: View {
 		version += 1
 	}
 	
+	func chooseNewWord() {
+		print("choosing new word")
+		currentWord = words.randomElement() ?? Word(foreign: "insecto", native: "bug", foreignDescription: "insecto", nativeDescription: "a problem in the program, or an insect")
+		if Bool.random() {
+			currentWord = currentWord.switchOrder()
+		}
+		scrambleLetters()
+		updateColumns()
+	}
+	
 	var body: some View {
 		VStack {
 			Spacer()
-			Text(scrambledWords[wordIndex].foreign)
+			Text(currentWord.foreignDescription)
 				.font(.title)
 			Spacer()
 			HStack {
@@ -87,14 +91,8 @@ struct ContentView: View {
 										isSelected[index] = true
 										currentAnswer += scrambledLetters[index]
 									}
-									if currentAnswer == scrambledWords[wordIndex].native {
-										wordIndex += 1
-										if wordIndex >= scrambledWords.count {
-											wordIndex = 0
-											scrambleWords()
-										}
-										scrambleLetters()
-										updateColumns()
+									if currentAnswer == currentWord.native {
+										chooseNewWord()
 									}
 								}) {
 									Text(scrambledLetters[index])
@@ -128,16 +126,7 @@ struct ContentView: View {
 			Spacer()
 			Button(action: {
 				print("Skip button works!")
-				if wordIndex < words.count - 1 {
-					wordIndex += 1
-					scrambleLetters()
-					updateColumns()
-				} else {
-					wordIndex = 0
-					scrambleWords() //not completely necessary, only if you want words in different order in each cycle
-					scrambleLetters()
-					updateColumns()
-				}
+				chooseNewWord()
 			}) {
 				Text("Skip ->")
 					.fontWeight(.bold)
@@ -146,9 +135,7 @@ struct ContentView: View {
 			Spacer()
 		} //end of main VStack
 		.onAppear() {
-			scrambleWords()
-			scrambleLetters()
-			updateColumns()
+			chooseNewWord()
 		}
 	}
 	func columnStart(_ column: Int) -> Int {
