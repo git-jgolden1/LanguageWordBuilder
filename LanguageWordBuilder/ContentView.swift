@@ -4,7 +4,6 @@
 //
 //  Created by Jonathan Gurr on 28-09-20.
 //
-// next goal: change name of word struct from foreign and native to question and answer
 
 
 import SwiftUI
@@ -19,7 +18,7 @@ struct ContentView: View {
 	@State var currentAnswer = ""
 	@State var version = 1
 	init() {
-		print("ContentView.init")
+//		print("ContentView.init")
 	}
 	
 	func resetAnswer() {
@@ -28,7 +27,7 @@ struct ContentView: View {
 	}
 	
 	func scrambleLetters() {
-		print("scrambling letters from \(currentWord.native)")
+//		print("scrambling letters from \(currentWord.answer)")
 		var wordIsNotScrambled = true
 		var isSelected: [Bool] = []
 		var scrambledLetters: [String] = []
@@ -36,16 +35,16 @@ struct ContentView: View {
 			currentAnswer = ""
 			scrambledLetters = []
 			isSelected = []
-			for letter in currentWord.native {
+			for letter in currentWord.answer {
 				scrambledLetters.append(String(letter))
 				isSelected.append(false)
 			}
 			scrambledLetters = scrambledLetters.shuffled()
-			wordIsNotScrambled = currentWord.native == scrambledLetters.joined()
+			wordIsNotScrambled = currentWord.answer == scrambledLetters.joined()
 		}
 		self.isSelected = isSelected
 		self.scrambledLetters = scrambledLetters
-		print("scrambling letters to \(scrambledLetters.joined())")
+//		print("scrambling letters to \(scrambledLetters.joined())")
 	}
 	
 	func updateColumns() {
@@ -63,8 +62,7 @@ struct ContentView: View {
 	}
 	
 	func chooseNewWord() {
-		print("choosing new word")
-		currentWord = words.randomElement() ?? Word(foreign: "insecto", native: "bug", foreignDescription: "insecto", nativeDescription: "a problem in the program, or an insect")
+		currentWord = words.randomElement() ?? Word(question: "insecto", answer: "bug", questionDescription: "insecto", answerDescription: "a problem in the program, or an insect")
 		if Bool.random() {
 			currentWord = currentWord.switchOrder()
 		}
@@ -79,15 +77,21 @@ struct ContentView: View {
 			isSelected[absoluteIndex] = true
 			currentAnswer += scrambledLetters[absoluteIndex]
 		}
-		if currentAnswer == currentWord.native {
+		if currentAnswer == currentWord.answer {
 			chooseNewWord()
 		}
+	}
+	
+	func unselectLetter(_ absoluteIndex: Int) {
+		assert(absoluteIndex >= 0)
+		isSelected[absoluteIndex] = false
+		currentAnswer.remove(at: currentAnswer.index(currentAnswer.startIndex, offsetBy: absoluteIndex))
 	}
 	
 	var body: some View {
 		VStack {
 			Spacer()
-			Text(currentWord.foreignDescription)
+			Text(currentWord.questionDescription)
 				.font(.title)
 			Spacer()
 			HStack {
@@ -136,10 +140,18 @@ struct ContentView: View {
 				Spacer()
 				Button(action: {
 					print("Hint button works!")
-					let firstLetter = String(currentWord.native.first!)
-					let index = scrambledLetters.firstIndex(of: firstLetter)
-					resetAnswer()
-					selectLetter(index!)
+					var index: Int
+					if currentWord.answer.hasPrefix(currentAnswer) || currentAnswer.count == 0 {
+						let nextCorrectLetterIndex = currentAnswer.count
+						let nextCorrectLetter = currentWord.answer[nextCorrectLetterIndex]
+						index = scrambledLetters.firstIndex(of: String(nextCorrectLetter))! //7, 7
+						//excelentemente => "excelen"
+						selectLetter(index)
+					} else {
+						//adios => "aso"
+						index = currentAnswer.count - 1
+						unselectLetter(index)
+					}
 				}) {
 					Text("Hint")
 						.fontWeight(.bold)
@@ -147,7 +159,6 @@ struct ContentView: View {
 				}
 				Spacer()
 				Button(action: {
-					print("Skip button works!")
 					chooseNewWord()
 				}) {
 					Text("Skip ->")

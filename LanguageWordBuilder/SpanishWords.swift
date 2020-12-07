@@ -8,9 +8,9 @@
 import Foundation
 
 let spanishWordSource = [
-	["hola"], ["hello", "typical English greeting"],
-	["perro"], ["dog", "animal with floppy ears and tail that goes 'woof'"],
-	["gato"], ["cat", "animal with pointy ears that goes 'meow'"],
+	["hola"], ["hello"],
+	["perro"], ["dog"],
+	["gato"], ["cat"],
 	["mujer"], ["woman"],
 	["hombre"], ["man"],
 	["excelentemente"], ["excellently"],
