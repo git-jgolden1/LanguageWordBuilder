@@ -10,7 +10,6 @@ import SwiftUI
 import CoreData
 
 struct ContentView: View {
-	//	@State var wordIndex: Int = 0
 	@State var currentWord = words[0]
 	@State var scrambledLetters: [String] = []
 	@State var isSelected: [Bool] = []
@@ -65,6 +64,7 @@ struct ContentView: View {
 		currentWord = words.randomElement() ?? Word(question: "insecto", answer: "bug", questionDescription: "insecto", answerDescription: "a problem in the program, or an insect")
 		if Bool.random() {
 			currentWord = currentWord.switchOrder()
+			print("order switched!")
 		}
 		scrambleLetters()
 		updateColumns()
@@ -139,18 +139,24 @@ struct ContentView: View {
 			HStack {
 				Spacer()
 				Button(action: {
-					print("Hint button works!")
-					var index: Int
+//					print("Hint button works!")
+					var index: Int? = nil
 					if currentWord.answer.hasPrefix(currentAnswer) || currentAnswer.count == 0 {
 						let nextCorrectLetterIndex = currentAnswer.count
-						let nextCorrectLetter = currentWord.answer[nextCorrectLetterIndex]
-						index = scrambledLetters.firstIndex(of: String(nextCorrectLetter))! //7, 7
+						let nextCorrectLetter = String(currentWord.answer[nextCorrectLetterIndex])
+						for i in isSelected.indices {
+							if scrambledLetters[i] == nextCorrectLetter && !isSelected[i] {
+								index = i
+								break
+							}
+						}
+						assert(index != nil)
 						//excelentemente => "excelen"
-						selectLetter(index)
+						selectLetter(index!)
 					} else {
 						//adios => "aso"
 						index = currentAnswer.count - 1
-						unselectLetter(index)
+						unselectLetter(index!)
 					}
 				}) {
 					Text("Hint")
