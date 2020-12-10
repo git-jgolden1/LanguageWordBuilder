@@ -20,6 +20,9 @@ let tagalogWordSource = [
 	["aso"], ["dog"],
 	["pusa"], ["cat"],
 	
+	["saan"], ["where"],
+	["paano"], ["how"],
+	
 	["sumbrero"], ["hat"],
 	["palda"], ["skirt"],
 	["sapatos"], ["shoes"],
@@ -28,12 +31,14 @@ let tagalogWordSource = [
 	
 	["gatas"], ["milk"],
 	["mangkok"], ["bowl"],
-
+	
 	["bahay"], ["house"],
 	["restawran"], ["restaurant"],
 	["istasyon"], ["station"],
-	["paradahan"], ["bus stop", "bus stop or parking lot"],
-
+	["paradahan"], ["bus stop or parking lot"],
+	["pos opis"], ["post office"],
+	["trabajo"], ["work"],
+	
 	["namin"], ["our"],
 	["kailangan"], ["need"],
 	["tuloy kayo"], ["stay"],
@@ -88,7 +93,10 @@ let tagalogWordSource = [
 	["nakaupo"], ["sitting"],
 	["nakatayo"], ["standing"],
 	["pupunta"], ["going"],
+	["pumupunta"], ["went"],
+	["pumunta"], ["will go"],
 	["nakasuot"], ["wearing"],
+	["naglalakad"], ["walking"],
 	
 	["numero"], ["number"],
 	["unang"], ["first"],
