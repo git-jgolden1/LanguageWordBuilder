@@ -82,10 +82,11 @@ struct ContentView: View {
 		}
 	}
 	
-	func unselectLetter(_ absoluteIndex: Int) {
-		assert(absoluteIndex >= 0)
-		isSelected[absoluteIndex] = false
-		currentAnswer.remove(at: currentAnswer.index(currentAnswer.startIndex, offsetBy: absoluteIndex))
+	func unselectLetter(currentAnswerIndex: Int, buttonIndex: Int) {
+		assert(currentAnswerIndex >= 0)
+		isSelected[buttonIndex] = false
+		let removeIndex: String.Index = currentAnswer.index(currentAnswer.startIndex, offsetBy: currentAnswerIndex)
+		currentAnswer.remove(at: removeIndex)
 	}
 	
 	var body: some View {
@@ -140,23 +141,17 @@ struct ContentView: View {
 				Spacer()
 				Button(action: {
 //					print("Hint button works!")
-					var index: Int? = nil
 					if currentWord.answer.hasPrefix(currentAnswer) || currentAnswer.count == 0 {
 						let nextCorrectLetterIndex = currentAnswer.count
 						let nextCorrectLetter = String(currentWord.answer[nextCorrectLetterIndex])
-						for i in isSelected.indices {
-							if scrambledLetters[i] == nextCorrectLetter && !isSelected[i] {
-								index = i
-								break
-							}
-						}
-						assert(index != nil)
-						//excelentemente => "excelen"
-						selectLetter(index!)
+						let buttonIndex = findButtonIndex(letter: nextCorrectLetter, whenSelected: false)
+						selectLetter(buttonIndex)
 					} else {
 						//adios => "aso"
-						index = currentAnswer.count - 1
-						unselectLetter(index!)
+						let currentAnswerIndex = currentAnswer.count - 1
+						let letterToUnselect = String(currentAnswer.last!)
+						let buttonIndex = findButtonIndex(letter: letterToUnselect, whenSelected: true)
+						unselectLetter(currentAnswerIndex: currentAnswerIndex, buttonIndex: buttonIndex)
 					}
 				}) {
 					Text("Hint")
@@ -179,9 +174,23 @@ struct ContentView: View {
 		}
 		Spacer()
 	}
+	
 	func columnStart(_ column: Int) -> Int {
 		return scrambledLetters.count * column / numberOfColumns
 	}
+	
+	func findButtonIndex(letter: String, whenSelected: Bool) -> Int {
+		var index: Int? = nil
+		for i in isSelected.indices {
+			if scrambledLetters[i] == letter && isSelected[i] == whenSelected {
+				index = i
+				break
+			}
+		}
+		assert(index != nil)
+		return index!
+	}
+
 }
 
 struct ContentView_Previews: PreviewProvider {
