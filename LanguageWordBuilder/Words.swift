@@ -28,3 +28,44 @@ var words: [Word] = stride(from: 0, to: wordSource.count - 1, by: 2).map {
 	let nativeDescription = wordSource[$0 + 1].count > 1 ? wordSource[$0 + 1][1] : wordSource[$0 + 1][0]
 	return Word(question: wordSource[$0][0], answer: wordSource[$0 + 1][0], questionDescription: foreignDescription, answerDescription: nativeDescription)
 }
+
+var wordSelectionProbabilities: [WordSelectionProbability] {
+	var a: [WordSelectionProbability] = []
+	for _ in words.indices {
+		a.append(WordSelectionProbability(1.0))
+	}
+	return a
+}
+
+class WordSelectionProbability {
+	private static let successRatio = 0.5
+	private static let smallFailureRatio = 1.25
+	private static let largeFailureRatio = pow(smallFailureRatio, 3)
+	var value: Double
+	func printValue() {
+		print("\(words[currentWordIndex].question) :  \(value)")
+	}
+	
+	func success() {
+		value *= WordSelectionProbability.successRatio
+		printValue()
+	}
+	
+	func smallFailure() {
+		value *= WordSelectionProbability.smallFailureRatio
+		printValue()
+	}
+	
+	func largeFailure() {
+		value *= WordSelectionProbability.largeFailureRatio
+		printValue()
+	}
+	
+	func shouldSelect() -> Bool {
+		return value >= Double.random(in: 0 ..< 1)
+	}
+	
+	init(_ value: Double) {
+		self.value = value
+	}
+}

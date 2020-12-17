@@ -5,9 +5,10 @@
 //  Created by Jonathan Gurr on 28-09-20.
 //
 
-
 import SwiftUI
 import CoreData
+
+var currentWordIndex = 0
 
 struct ContentView: View {
 	@State var currentWord = words[0]
@@ -15,9 +16,10 @@ struct ContentView: View {
 	@State var isSelected: [Bool] = []
 	@State var numberOfColumns: Int = 1
 	@State var currentAnswer = ""
+	@State var score = 0
 	@State var version = 1
 	init() {
-//		print("ContentView.init")
+		//		print("ContentView.init")
 	}
 	
 	func resetAnswer() {
@@ -26,7 +28,7 @@ struct ContentView: View {
 	}
 	
 	func scrambleLetters() {
-//		print("scrambling letters from \(currentWord.answer)")
+		//		print("scrambling letters from \(currentWord.answer)")
 		var wordIsNotScrambled = true
 		var isSelected: [Bool] = []
 		var scrambledLetters: [String] = []
@@ -43,7 +45,7 @@ struct ContentView: View {
 		}
 		self.isSelected = isSelected
 		self.scrambledLetters = scrambledLetters
-//		print("scrambling letters to \(scrambledLetters.joined())")
+		//		print("scrambling letters to \(scrambledLetters.joined())")
 	}
 	
 	func updateColumns() {
@@ -61,23 +63,35 @@ struct ContentView: View {
 	}
 	
 	func chooseNewWord() {
-		currentWord = words.randomElement() ?? Word(question: "insecto", answer: "bug", questionDescription: "insecto", answerDescription: "a problem in the program, or an insect")
+		let previousWordAnswer = currentWord.answer
+		while previousWordAnswer == currentWord.answer {
+			var loopCount = 1
+			currentWordIndex = Int.random(in: 0 ..< words.count)
+			currentWord = words[currentWordIndex]
+			loopCount += 1
+			assert(loopCount < 10)
+		}
+		
 		if Bool.random() {
 			currentWord = currentWord.switchOrder()
-			print("order switched!")
+			//			print("order switched!")
 		}
+		
+		wordSelectionProbabilities[currentWordIndex].success()
 		scrambleLetters()
 		updateColumns()
 	}
 	
 	func selectLetter(_ absoluteIndex: Int) {
 		if isSelected[absoluteIndex] {
+			wordSelectionProbabilities[currentWordIndex].smallFailure()
 			resetAnswer()
 		} else {
 			isSelected[absoluteIndex] = true
 			currentAnswer += scrambledLetters[absoluteIndex]
 		}
 		if currentAnswer == currentWord.answer {
+			score += 1
 			chooseNewWord()
 		}
 	}
@@ -95,6 +109,7 @@ struct ContentView: View {
 			Text(currentWord.questionDescription)
 				.font(.title)
 			Spacer()
+			Text("Score: \(score)")
 			HStack {
 				Spacer()
 				ForEach(0 ..< numberOfColumns, id: \.self) { column in
@@ -140,14 +155,20 @@ struct ContentView: View {
 			HStack {
 				Spacer()
 				Button(action: {
-//					print("Hint button works!")
+					//					print("Hint button works!")
+					
+					
 					if currentWord.answer.hasPrefix(currentAnswer) || currentAnswer.count == 0 {
-						let nextCorrectLetterIndex = currentAnswer.count
-						let nextCorrectLetter = String(currentWord.answer[nextCorrectLetterIndex])
-						let buttonIndex = findButtonIndex(letter: nextCorrectLetter, whenSelected: false)
-						selectLetter(buttonIndex)
+						if currentAnswer.count < currentWord.answer.count - 1 {
+							wordSelectionProbabilities[currentWordIndex].smallFailure()
+							let nextCorrectLetterIndex = currentAnswer.count
+							let nextCorrectLetter = String(currentWord.answer[nextCorrectLetterIndex])
+							let buttonIndex = findButtonIndex(letter: nextCorrectLetter, whenSelected: false)
+							selectLetter(buttonIndex)
+						}
 					} else {
 						//adios => "aso"
+						wordSelectionProbabilities[currentWordIndex].smallFailure()
 						let currentAnswerIndex = currentAnswer.count - 1
 						let letterToUnselect = String(currentAnswer.last!)
 						let buttonIndex = findButtonIndex(letter: letterToUnselect, whenSelected: true)
@@ -160,6 +181,7 @@ struct ContentView: View {
 				}
 				Spacer()
 				Button(action: {
+					wordSelectionProbabilities[currentWordIndex].largeFailure()
 					chooseNewWord()
 				}) {
 					Text("Skip ->")
@@ -190,7 +212,6 @@ struct ContentView: View {
 		assert(index != nil)
 		return index!
 	}
-
 }
 
 struct ContentView_Previews: PreviewProvider {
