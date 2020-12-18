@@ -6,8 +6,8 @@
 //
 /*
 Tasks:
-1. make largeFailure raise wordProbabilityRatio instead of lowering it
-2. refactor contentView
+1. Refacor ContentView
+2. Backend storage using database
 
 Bugs:
 1: 

@@ -31,8 +31,8 @@ var words: [Word] = stride(from: 0, to: wordSource.count - 1, by: 2).map {
 
 class WordSelectionProbability {
 	private static let successRatio = 0.5
-	private static let smallFailureRatio = 1.25
-	private static let largeFailureRatio = pow(smallFailureRatio, 3)
+	private static let smallFailureRatio: Double = 1.25
+	private static let largeFailureRatio = 2 * pow(smallFailureRatio, 3)
 	var value: Double
 	func printValue() {
 		print("\(words[currentWordIndex].question) :  \(value)")
