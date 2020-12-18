@@ -29,14 +29,6 @@ var words: [Word] = stride(from: 0, to: wordSource.count - 1, by: 2).map {
 	return Word(question: wordSource[$0][0], answer: wordSource[$0 + 1][0], questionDescription: foreignDescription, answerDescription: nativeDescription)
 }
 
-var wordSelectionProbabilities: [WordSelectionProbability] {
-	var a: [WordSelectionProbability] = []
-	for _ in words.indices {
-		a.append(WordSelectionProbability(1.0))
-	}
-	return a
-}
-
 class WordSelectionProbability {
 	private static let successRatio = 0.5
 	private static let smallFailureRatio = 1.25
@@ -47,16 +39,19 @@ class WordSelectionProbability {
 	}
 	
 	func success() {
+		printValue()
 		value *= WordSelectionProbability.successRatio
 		printValue()
 	}
 	
 	func smallFailure() {
+		printValue()
 		value *= WordSelectionProbability.smallFailureRatio
 		printValue()
 	}
 	
 	func largeFailure() {
+		printValue()
 		value *= WordSelectionProbability.largeFailureRatio
 		printValue()
 	}
@@ -68,4 +63,13 @@ class WordSelectionProbability {
 	init(_ value: Double) {
 		self.value = value
 	}
+}
+
+var wordSelectionProbabilities = makeWordSelectionProbabilities()
+func makeWordSelectionProbabilities() -> [WordSelectionProbability] {
+	var a: [WordSelectionProbability] = []
+	for _ in words.indices {
+		a.append(WordSelectionProbability(1.0))
+	}
+	return a
 }
