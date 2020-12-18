@@ -6,8 +6,8 @@
 //
 /*
 Tasks:
-1. get shouldSelect working
-2.
+1. make largeFailure raise wordProbabilityRatio instead of lowering it
+2. refactor contentView
 
 Bugs:
 1: 

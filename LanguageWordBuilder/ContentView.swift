@@ -64,7 +64,7 @@ struct ContentView: View {
 	
 	func chooseNewWord() {
 		let previousWordAnswer = currentWord.answer
-		while previousWordAnswer == currentWord.answer {
+		while previousWordAnswer == currentWord.answer || !wordSelectionProbabilities[currentWordIndex].shouldSelect() {
 			var loopCount = 1
 			currentWordIndex = Int.random(in: 0 ..< words.count)
 			currentWord = words[currentWordIndex]

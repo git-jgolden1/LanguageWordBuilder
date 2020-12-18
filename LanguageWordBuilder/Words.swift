@@ -57,7 +57,12 @@ class WordSelectionProbability {
 	}
 	
 	func shouldSelect() -> Bool {
-		return value >= Double.random(in: 0 ..< 1)
+		let randomDouble = Double.random(in: 0 ..< 1)
+		print("random Double = \(randomDouble), value = \(value). Value greater than or equal to random Double is \(value >= randomDouble)")
+		if !(value >= randomDouble) {
+			print("number skipped")
+		}
+		return value >= randomDouble
 	}
 	
 	init(_ value: Double) {
