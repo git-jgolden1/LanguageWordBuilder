@@ -6,8 +6,9 @@
 //
 /*
 Tasks:
-1. Refacor ContentView
-2. Backend storage using database
+1. Refactor ContentView
+2. Button for changing language
+3. Backend storage using database
 
 Bugs:
 1: 

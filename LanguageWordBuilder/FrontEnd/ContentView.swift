@@ -6,62 +6,19 @@
 //
 
 import SwiftUI
-import CoreData
-
-var currentWordIndex = 0
 
 struct ContentView: View {
-	@State var currentWord = words[0]
-	@State var scrambledLetters: [String] = []
-	@State var isSelected: [Bool] = []
-	@State var numberOfColumns: Int = 1
-	@State var currentAnswer = ""
-	@State var score = 0
-	@State var version = 1
 	init() {
-		//		print("ContentView.init")
+		internalNumberOfColumns.addListener(refresh)
 	}
 	
-	func resetAnswer() {
-		isSelected = isSelected.map {_ in false}
-		currentAnswer = ""
-	}
-	
-	func scrambleLetters() {
-		//		print("scrambling letters from \(currentWord.answer)")
-		var wordIsNotScrambled = true
-		var isSelected: [Bool] = []
-		var scrambledLetters: [String] = []
-		while wordIsNotScrambled {
-			currentAnswer = ""
-			scrambledLetters = []
-			isSelected = []
-			for letter in currentWord.answer {
-				scrambledLetters.append(String(letter))
-				isSelected.append(false)
-			}
-			scrambledLetters = scrambledLetters.shuffled()
-			wordIsNotScrambled = currentWord.answer == scrambledLetters.joined()
-		}
-		self.isSelected = isSelected
-		self.scrambledLetters = scrambledLetters
-		//		print("scrambling letters to \(scrambledLetters.joined())")
-	}
-	
-	func updateColumns() {
-		let dividing: Double = Double(scrambledLetters.count) / 7
-		let extractedCeil: Double = ceil(dividing)
-		numberOfColumns = Int(extractedCeil)
-		if scrambledLetters.count > 3 && numberOfColumns == 1 {
-			numberOfColumns = 2
-		}
-		refresh()
-	}
+	@State var version = 1
 	
 	func refresh() {
 		version += 1
+		print("new version is \(version)")
 	}
-	
+
 	func chooseNewWord() {
 		let previousWordAnswer = currentWord.answer
 		while previousWordAnswer == currentWord.answer || !wordSelectionProbabilities[currentWordIndex].shouldSelect() {
@@ -137,10 +94,6 @@ struct ContentView: View {
 												.stroke(Color.black, lineWidth: 3)
 										)
 								} //end of button UI
-								//								if isSelected[index] {
-								//									Text("X")
-								//										.font(.largeTitle)
-								//								}
 							} //end of ZStack
 							Spacer()
 						} //end of inner ForEach
@@ -155,8 +108,7 @@ struct ContentView: View {
 			HStack {
 				Spacer()
 				Button(action: {
-					//					print("Hint button works!")
-					
+					//print("Hint button works!")
 					
 					if currentWord.answer.hasPrefix(currentAnswer) || currentAnswer.count == 0 {
 						if currentAnswer.count < currentWord.answer.count - 1 {
