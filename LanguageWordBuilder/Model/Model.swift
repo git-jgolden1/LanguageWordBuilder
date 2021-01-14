@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 var currentWordIndex = 0
 var isSelected: [Bool] = []
@@ -13,7 +14,7 @@ var currentAnswer = ""
 var currentWord = words[0]
 var scrambledLetters: [String] = []
 
-var internalNumberOfColumns = Observable(0)
+var internalNumberOfColumns = Observable(2)
 
 var numberOfColumns: Int {
 	get {
@@ -61,4 +62,13 @@ class Observable<G> {
 		internalState = state
 	}
 	
+}
+
+var appState = AppState()
+enum ViewRefreshKey {
+	case mainView
+}
+
+class AppState {
+	static let subject = PassthroughSubject<ViewRefreshKey, Never>()
 }

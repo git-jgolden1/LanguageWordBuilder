@@ -7,12 +7,16 @@
 
 import SwiftUI
 
+let stateChangeCollectionTime: Int = 10
+
 struct ContentView: View {
+	
 	init() {
-		internalNumberOfColumns.addListener(refresh)
+		internalNumberOfColumns.addListener({ AppState.subject.send(ViewRefreshKey.mainView) })
 	}
 	
 	@State var version = 1
+	
 	
 	func refresh() {
 		version += 1
@@ -146,10 +150,19 @@ struct ContentView: View {
 		.onAppear() {
 			chooseNewWord()
 		}
+		.onReceive(
+			AppState.subject
+				.filter({ $0 == .mainView })
+				.collect(.byTime(RunLoop.main, .milliseconds(stateChangeCollectionTime)))
+		) { x in
+			refresh()
+			print("TopView: view state changed to \(self.version)")
+		}
 		Spacer()
 	}
 	
 	func columnStart(_ column: Int) -> Int {
+		print("\(numberOfColumns) = number of columns")
 		return scrambledLetters.count * column / numberOfColumns
 	}
 	
