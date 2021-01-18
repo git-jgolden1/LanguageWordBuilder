@@ -9,20 +9,23 @@ import SwiftUI
 
 let stateChangeCollectionTime: Int = 10
 
+
 struct ContentView: View {
 	
 	init() {
-		internalNumberOfColumns.addListener({ AppState.subject.send(ViewRefreshKey.mainView) })
+		if !internalNumberOfColumns.hasListener(name: "frontEnd") {
+			internalNumberOfColumns.addListener(name: "frontEnd")
+				{ AppState.subject.send(ViewRefreshKey.mainView) }
+		}
 	}
 	
 	@State var version = 1
-	
 	
 	func refresh() {
 		version += 1
 		print("new version is \(version)")
 	}
-
+	
 	func chooseNewWord() {
 		let previousWordAnswer = currentWord.answer
 		while previousWordAnswer == currentWord.answer || !wordSelectionProbabilities[currentWordIndex].shouldSelect() {
@@ -41,6 +44,7 @@ struct ContentView: View {
 		wordSelectionProbabilities[currentWordIndex].success()
 		scrambleLetters()
 		updateColumns()
+		print("New word chosen. Scrambled letters = \(scrambledLetters)")
 	}
 	
 	func selectLetter(_ absoluteIndex: Int) {
@@ -65,98 +69,101 @@ struct ContentView: View {
 	}
 	
 	var body: some View {
-		VStack {
-			Spacer()
-			Text(currentWord.questionDescription)
-				.font(.title)
-			Spacer()
-			Text("Score: \(score)")
-			HStack {
+		ForEach(version ..< version + 1, id: \.self) { _ in
+			VStack {
 				Spacer()
-				ForEach(0 ..< numberOfColumns, id: \.self) { column in
-					VStack {
-						Spacer()
-						ForEach(
-							columnStart(column)
-								..<
-								columnStart(column + 1),
-							id: \.self) { index in
-							ZStack {
-								Button(action: {
-									selectLetter(index)
-								}) {
-									Text(scrambledLetters[index])
-										.fontWeight(.bold)
-										.font(.title)
-										.padding(10)
-										.background(isSelected[index] ? Color.green : Color.black)
-										.cornerRadius(24)
-										.foregroundColor(.white)
-										.padding(10)
-										.overlay(
-											RoundedRectangle(cornerRadius: 24)
-												.stroke(Color.black, lineWidth: 3)
-										)
-								} //end of button UI
-							} //end of ZStack
-							Spacer()
-						} //end of inner ForEach
-					} //end of VStack
+				Text(currentWord.questionDescription)
+					.font(.title)
+				Spacer()
+				Text("Score: \(score)")
+				HStack {
 					Spacer()
-				} //end of outer ForEach
-			} //end of column-HStack
-			Spacer()
-			Text(currentAnswer)
-				.font(.title)
-				.frame(minHeight: 40)
-			HStack {
+					ForEach(0 ..< numberOfColumns, id: \.self) { column in
+						VStack {
+							Spacer()
+							ForEach(
+								columnStart(column)
+									..<
+									columnStart(column + 1),
+								id: \.self) { index in
+								ZStack {
+									Button(action: {
+										selectLetter(index)
+									}) {
+										Text(scrambledLetters[index])
+											.fontWeight(.bold)
+											.font(.title)
+											.padding(10)
+											.background(isSelected[index] ? Color.green : Color.black)
+											.cornerRadius(24)
+											.foregroundColor(.white)
+											.padding(10)
+											.overlay(
+												RoundedRectangle(cornerRadius: 24)
+													.stroke(Color.black, lineWidth: 3)
+											)
+									} //end of button UI
+								} //end of ZStack
+								Spacer()
+							} //end of inner ForEach
+						} //end of VStack
+						Spacer()
+					} //end of outer ForEach
+				} //end of column-HStack
 				Spacer()
-				Button(action: {
-					//print("Hint button works!")
-					
-					if currentWord.answer.hasPrefix(currentAnswer) || currentAnswer.count == 0 {
-						if currentAnswer.count < currentWord.answer.count - 1 {
+				Text(currentAnswer)
+					.font(.title)
+					.frame(minHeight: 40)
+				HStack {
+					Spacer()
+					Button(action: {
+						//print("Hint button works!")
+						
+						if currentWord.answer.hasPrefix(currentAnswer) || currentAnswer.count == 0 {
+							if currentAnswer.count < currentWord.answer.count - 1 {
+								wordSelectionProbabilities[currentWordIndex].smallFailure()
+								let nextCorrectLetterIndex = currentAnswer.count
+								let nextCorrectLetter = String(currentWord.answer[nextCorrectLetterIndex])
+								let buttonIndex = findButtonIndex(letter: nextCorrectLetter, whenSelected: false)
+								selectLetter(buttonIndex)
+							}
+						} else {
+							//adios => "aso"
 							wordSelectionProbabilities[currentWordIndex].smallFailure()
-							let nextCorrectLetterIndex = currentAnswer.count
-							let nextCorrectLetter = String(currentWord.answer[nextCorrectLetterIndex])
-							let buttonIndex = findButtonIndex(letter: nextCorrectLetter, whenSelected: false)
-							selectLetter(buttonIndex)
+							let currentAnswerIndex = currentAnswer.count - 1
+							let letterToUnselect = String(currentAnswer.last!)
+							let buttonIndex = findButtonIndex(letter: letterToUnselect, whenSelected: true)
+							unselectLetter(currentAnswerIndex: currentAnswerIndex, buttonIndex: buttonIndex)
 						}
-					} else {
-						//adios => "aso"
-						wordSelectionProbabilities[currentWordIndex].smallFailure()
-						let currentAnswerIndex = currentAnswer.count - 1
-						let letterToUnselect = String(currentAnswer.last!)
-						let buttonIndex = findButtonIndex(letter: letterToUnselect, whenSelected: true)
-						unselectLetter(currentAnswerIndex: currentAnswerIndex, buttonIndex: buttonIndex)
+					}) {
+						Text("Hint")
+							.fontWeight(.bold)
+							.foregroundColor(Color.blue)
 					}
-				}) {
-					Text("Hint")
-						.fontWeight(.bold)
-						.foregroundColor(Color.blue)
-				}
-				Spacer()
-				Button(action: {
-					wordSelectionProbabilities[currentWordIndex].largeFailure()
-					chooseNewWord()
-				}) {
-					Text("Skip ->")
-						.fontWeight(.bold)
-						.foregroundColor(Color.orange)
-				}
-				Spacer()
-			} //end of HStack for bottom buttons
-		} //end of main VStack
-		.onAppear() {
-			chooseNewWord()
+					Spacer()
+					Button(action: {
+						wordSelectionProbabilities[currentWordIndex].largeFailure()
+						chooseNewWord()
+					}) {
+						Text("Skip ->")
+							.fontWeight(.bold)
+							.foregroundColor(Color.orange)
+					}
+					Spacer()
+				} //end of HStack for bottom buttons
+			} //end of main VStack
 		}
 		.onReceive(
 			AppState.subject
 				.filter({ $0 == .mainView })
-				.collect(.byTime(RunLoop.main, .milliseconds(stateChangeCollectionTime)))
+			//				.collect(.byTime(RunLoop.main, .milliseconds(stateChangeCollectionTime)))
 		) { x in
 			refresh()
 			print("TopView: view state changed to \(self.version)")
+		}
+		.onAppear() {
+			print("appearing...")
+			chooseNewWord()
 		}
 		Spacer()
 	}

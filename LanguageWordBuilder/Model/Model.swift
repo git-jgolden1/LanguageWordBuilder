@@ -39,16 +39,15 @@ class Observable<G> {
 		
 		set(newState) {
 			internalState = newState
-			listeners.forEach({ $0() })
-			print("state changed to \(newState)")
+			listeners.values.forEach({ $0() })
 		}
 	
 	}
 
-	private lazy var listeners = [() -> Void]()
+	private var listeners: [String: () -> Void] = [:]
 	
-	func addListener(_ listener: @escaping () -> Void) {
-		listeners.append(listener)
+	func addListener(name: String, _ listener: @escaping () -> Void) {
+		listeners[name] = listener
 		print("Listener added")
 	}
 	
@@ -58,8 +57,13 @@ class Observable<G> {
 //		}
 //	}
 	
+	func hasListener(name: String) -> Bool {
+		return listeners.keys.contains(name)
+	}
+	
 	init(_ state: G) {
 		internalState = state
+		print("state changed to \(internalState)")
 	}
 	
 }
