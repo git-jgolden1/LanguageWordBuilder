@@ -38,6 +38,7 @@ struct ContentView: View {
 			score += 1
 			chooseNewWord()
 		}
+		refresh()
 	}
 	
 	func unselectLetter(currentAnswerIndex: Int, buttonIndex: Int) {
