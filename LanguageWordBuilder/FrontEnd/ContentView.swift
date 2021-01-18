@@ -9,7 +9,6 @@ import SwiftUI
 
 let stateChangeCollectionTime: Int = 10
 
-
 struct ContentView: View {
 	
 	init() {
