@@ -18,6 +18,9 @@ struct LanguageWordBuilderApp: App {
 				.environment(\.managedObjectContext, persistenceController.container.viewContext)
 		}
 	}
+	init() {
+		chooseNewWord()
+	}
 }
 
 struct LanguageWordBuilderApp_Previews: PreviewProvider {

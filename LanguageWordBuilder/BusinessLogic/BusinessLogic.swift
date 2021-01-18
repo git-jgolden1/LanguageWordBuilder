@@ -38,3 +38,24 @@ func updateColumns() {
 		numberOfColumns = 2
 	}
 }
+
+func chooseNewWord() {
+	let previousWordAnswer = currentWord.answer
+	while previousWordAnswer == currentWord.answer || !wordSelectionProbabilities[currentWordIndex].shouldSelect() {
+		var loopCount = 1
+		currentWordIndex = Int.random(in: 0 ..< words.count)
+		currentWord = words[currentWordIndex]
+		loopCount += 1
+		assert(loopCount < 10)
+	}
+	
+	if Bool.random() {
+		currentWord = currentWord.switchOrder()
+		//			print("order switched!")
+	}
+	
+	wordSelectionProbabilities[currentWordIndex].success()
+	scrambleLetters()
+	updateColumns()
+	print("New word chosen. Scrambled letters = \(scrambledLetters)")
+}

@@ -26,27 +26,6 @@ struct ContentView: View {
 		print("new version is \(version)")
 	}
 	
-	func chooseNewWord() {
-		let previousWordAnswer = currentWord.answer
-		while previousWordAnswer == currentWord.answer || !wordSelectionProbabilities[currentWordIndex].shouldSelect() {
-			var loopCount = 1
-			currentWordIndex = Int.random(in: 0 ..< words.count)
-			currentWord = words[currentWordIndex]
-			loopCount += 1
-			assert(loopCount < 10)
-		}
-		
-		if Bool.random() {
-			currentWord = currentWord.switchOrder()
-			//			print("order switched!")
-		}
-		
-		wordSelectionProbabilities[currentWordIndex].success()
-		scrambleLetters()
-		updateColumns()
-		print("New word chosen. Scrambled letters = \(scrambledLetters)")
-	}
-	
 	func selectLetter(_ absoluteIndex: Int) {
 		if isSelected[absoluteIndex] {
 			wordSelectionProbabilities[currentWordIndex].smallFailure()
@@ -163,13 +142,12 @@ struct ContentView: View {
 		}
 		.onAppear() {
 			print("appearing...")
-			chooseNewWord()
 		}
 		Spacer()
 	}
 	
 	func columnStart(_ column: Int) -> Int {
-		print("\(numberOfColumns) = number of columns")
+//		print("\(numberOfColumns) = number of columns")
 		return scrambledLetters.count * column / numberOfColumns
 	}
 	
