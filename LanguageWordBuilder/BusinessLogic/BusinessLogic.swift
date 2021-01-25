@@ -33,9 +33,9 @@ func scrambleLetters() {
 func updateColumns() {
 	let dividing = Double(scrambledLetters.count) / 7
 	let extractedCeil = Int(ceil(dividing))
-	numberOfColumns = extractedCeil
-	if scrambledLetters.count > 3 && numberOfColumns == 1 {
-		numberOfColumns = 2
+	appState.numberOfColumns = extractedCeil
+	if scrambledLetters.count > 3 && appState.numberOfColumns == 1 {
+		appState.numberOfColumns = 2
 	}
 }
 

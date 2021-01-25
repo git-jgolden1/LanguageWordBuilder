@@ -58,7 +58,7 @@ struct ContentView: View {
 				Text("Score: \(score)")
 				HStack {
 					Spacer()
-					ForEach(0 ..< numberOfColumns, id: \.self) { column in
+					ForEach(0 ..< appState.numberOfColumns, id: \.self) { column in
 						VStack {
 							Spacer()
 							ForEach(
@@ -149,7 +149,7 @@ struct ContentView: View {
 	
 	func columnStart(_ column: Int) -> Int {
 //		print("\(numberOfColumns) = number of columns")
-		return scrambledLetters.count * column / numberOfColumns
+		return scrambledLetters.count * column / appState.numberOfColumns
 	}
 	
 	func findButtonIndex(letter: String, whenSelected: Bool) -> Int {
