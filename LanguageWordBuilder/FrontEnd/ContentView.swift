@@ -14,7 +14,11 @@ struct ContentView: View {
 	init() {
 		if !appState.$numberOfColumns.hasListener(name: "frontEnd") {
 			appState.$numberOfColumns.addListener(name: "frontEnd")
-				{ AppState.subject.send(ViewRefreshKey.mainView) }
+				{ appState.subject.send(ViewRefreshKey.mainView) }
+		}
+		if !appState.$isSelected.hasListener(name: "frontEnd") {
+			appState.$isSelected.addListener(name: "frontEnd")
+				{ appState.subject.send(ViewRefreshKey.mainView) }
 		}
 	}
 	
@@ -25,28 +29,7 @@ struct ContentView: View {
 		print("new version is \(version)")
 	}
 	
-	func selectLetter(_ absoluteIndex: Int) {
-		if isSelected[absoluteIndex] {
-			wordSelectionProbabilities[currentWordIndex].smallFailure()
-			resetAnswer()
-		} else {
-			isSelected[absoluteIndex] = true
-			currentAnswer += scrambledLetters[absoluteIndex]
-		}
-		if currentAnswer == currentWord.answer {
-			score += 1
-			chooseNewWord()
-		} else {
-			refresh()
-		}
-	}
-	
-	func unselectLetter(currentAnswerIndex: Int, buttonIndex: Int) {
-		assert(currentAnswerIndex >= 0)
-		isSelected[buttonIndex] = false
-		let removeIndex: String.Index = currentAnswer.index(currentAnswer.startIndex, offsetBy: currentAnswerIndex)
-		currentAnswer.remove(at: removeIndex)
-	}
+
 	
 	var body: some View {
 		ForEach(version ..< version + 1, id: \.self) { _ in
@@ -74,7 +57,7 @@ struct ContentView: View {
 											.fontWeight(.bold)
 											.font(.title)
 											.padding(10)
-											.background(isSelected[index] ? Color.green : Color.black)
+											.background(appState.isSelected[index] ? Color.green : Color.black)
 											.cornerRadius(24)
 											.foregroundColor(.white)
 											.padding(10)
@@ -134,9 +117,9 @@ struct ContentView: View {
 			} //end of main VStack
 		}
 		.onReceive(
-			AppState.subject
+			appState.subject
 				.filter({ $0 == .mainView })
-			//				.collect(.byTime(RunLoop.main, .milliseconds(stateChangeCollectionTime)))
+				.collect(.byTime(RunLoop.main, .milliseconds(stateChangeCollectionTime)))
 		) { x in
 			refresh()
 			print("TopView: view state changed to \(self.version)")
@@ -154,8 +137,8 @@ struct ContentView: View {
 	
 	func findButtonIndex(letter: String, whenSelected: Bool) -> Int {
 		var index: Int? = nil
-		for i in isSelected.indices {
-			if scrambledLetters[i] == letter && isSelected[i] == whenSelected {
+		for i in appState.isSelected.indices {
+			if scrambledLetters[i] == letter && appState.isSelected[i] == whenSelected {
 				index = i
 				break
 			}

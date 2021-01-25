@@ -8,7 +8,7 @@
 import Foundation
 
 func resetAnswer() {
-	isSelected = isSelected.map {_ in false}
+	appState.isSelected = appState.isSelected.map {_ in false}
 	currentAnswer = ""
 }
 
@@ -19,10 +19,10 @@ func scrambleLetters() {
 	while wordIsNotScrambled {
 		currentAnswer = ""
 		scrambledLetters = []
-		isSelected = []
+		appState.isSelected = []
 		for letter in currentWord.answer {
 			scrambledLetters.append(String(letter))
-			isSelected.append(false)
+			appState.isSelected.append(false)
 		}
 		scrambledLetters = scrambledLetters.shuffled()
 		wordIsNotScrambled = currentWord.answer == scrambledLetters.joined()
@@ -60,3 +60,23 @@ func chooseNewWord() {
 	print("New word chosen. Scrambled letters = \(scrambledLetters)")
 }
 
+func selectLetter(_ absoluteIndex: Int) {
+	if appState.isSelected[absoluteIndex] {
+		wordSelectionProbabilities[currentWordIndex].smallFailure()
+		resetAnswer()
+	} else {
+		appState.isSelected[absoluteIndex] = true
+		currentAnswer += scrambledLetters[absoluteIndex]
+	}
+	if currentAnswer == currentWord.answer {
+		score += 1
+		chooseNewWord()
+	}
+}
+
+func unselectLetter(currentAnswerIndex: Int, buttonIndex: Int) {
+	assert(currentAnswerIndex >= 0)
+	appState.isSelected[buttonIndex] = false
+	let removeIndex: String.Index = currentAnswer.index(currentAnswer.startIndex, offsetBy: currentAnswerIndex)
+	currentAnswer.remove(at: removeIndex)
+}

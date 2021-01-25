@@ -9,24 +9,12 @@ import Foundation
 import Combine
 
 var currentWordIndex = 0
-var isSelected: [Bool] = []
 var currentAnswer = ""
 var currentWord = words[0]
 var scrambledLetters: [String] = []
 
-//var internalNumberOfColumns = Observable(2)
-//
-//var numberOfColumns: Int {
-//	get {
-//		return internalNumberOfColumns.state
-//	}
-//	set(newValue) {
-//		internalNumberOfColumns.state = newValue
-//	}
-//}
-
 class AppState {
-	static let subject = PassthroughSubject<ViewRefreshKey, Never>()
+	let subject = PassthroughSubject<ViewRefreshKey, Never>()
 	@WrappedObservable var numberOfColumns = 2
 	@WrappedObservable var isSelected = [Bool]()
 }
