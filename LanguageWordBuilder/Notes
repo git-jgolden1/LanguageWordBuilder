@@ -6,7 +6,7 @@
 //
 /*
 Tasks:
-1. Refactor ContentView (put functions into business logic if not changing front end)
+1. Refactor ContentView ()
 2. Button for changing language
 3. Backend storage using database
 

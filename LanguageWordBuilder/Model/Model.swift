@@ -66,3 +66,10 @@ var appState = AppState()
 enum ViewRefreshKey {
 	case mainView
 }
+
+func addAppStateListener<T>(_ o: Observable<T>) {
+	if !o.hasListener(name: "frontEnd") {
+		o.addListener(name: "frontEnd")
+			{ appState.subject.send(ViewRefreshKey.mainView) }
+	}
+}

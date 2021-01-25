@@ -12,14 +12,8 @@ let stateChangeCollectionTime: Int = 10
 struct ContentView: View {
 	
 	init() {
-		if !appState.$numberOfColumns.hasListener(name: "frontEnd") {
-			appState.$numberOfColumns.addListener(name: "frontEnd")
-				{ appState.subject.send(ViewRefreshKey.mainView) }
-		}
-		if !appState.$isSelected.hasListener(name: "frontEnd") {
-			appState.$isSelected.addListener(name: "frontEnd")
-				{ appState.subject.send(ViewRefreshKey.mainView) }
-		}
+		addAppStateListener(appState.$numberOfColumns)
+		addAppStateListener(appState.$isSelected)
 	}
 	
 	@State var version = 1
