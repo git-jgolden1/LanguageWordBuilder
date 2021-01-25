@@ -59,3 +59,4 @@ func chooseNewWord() {
 	updateColumns()
 	print("New word chosen. Scrambled letters = \(scrambledLetters)")
 }
+

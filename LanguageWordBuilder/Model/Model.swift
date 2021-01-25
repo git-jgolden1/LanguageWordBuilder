@@ -14,15 +14,21 @@ var currentAnswer = ""
 var currentWord = words[0]
 var scrambledLetters: [String] = []
 
-var internalNumberOfColumns = Observable(2)
+//var internalNumberOfColumns = Observable(2)
+//
+//var numberOfColumns: Int {
+//	get {
+//		return internalNumberOfColumns.state
+//	}
+//	set(newValue) {
+//		internalNumberOfColumns.state = newValue
+//	}
+//}
 
-var numberOfColumns: Int {
-	get {
-		return internalNumberOfColumns.state
-	}
-	set(newValue) {
-		internalNumberOfColumns.state = newValue
-	}
+class AppState {
+	static let subject = PassthroughSubject<ViewRefreshKey, Never>()
+	@WrappedObservable var numberOfColumns = 2
+	@WrappedObservable var isSelected = [Bool]()
 }
 
 var score = 0
@@ -43,7 +49,7 @@ class Observable<G> {
 		}
 	
 	}
-
+	
 	private var listeners: [String: () -> Void] = [:]
 	
 	func addListener(name: String, _ listener: @escaping () -> Void) {
@@ -71,8 +77,4 @@ class Observable<G> {
 var appState = AppState()
 enum ViewRefreshKey {
 	case mainView
-}
-
-class AppState {
-	static let subject = PassthroughSubject<ViewRefreshKey, Never>()
 }

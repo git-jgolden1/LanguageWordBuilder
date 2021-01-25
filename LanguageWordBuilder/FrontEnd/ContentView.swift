@@ -12,8 +12,8 @@ let stateChangeCollectionTime: Int = 10
 struct ContentView: View {
 	
 	init() {
-		if !internalNumberOfColumns.hasListener(name: "frontEnd") {
-			internalNumberOfColumns.addListener(name: "frontEnd")
+		if !appState.$numberOfColumns.hasListener(name: "frontEnd") {
+			appState.$numberOfColumns.addListener(name: "frontEnd")
 				{ AppState.subject.send(ViewRefreshKey.mainView) }
 		}
 	}
@@ -36,8 +36,9 @@ struct ContentView: View {
 		if currentAnswer == currentWord.answer {
 			score += 1
 			chooseNewWord()
+		} else {
+			refresh()
 		}
-		refresh()
 	}
 	
 	func unselectLetter(currentAnswerIndex: Int, buttonIndex: Int) {
