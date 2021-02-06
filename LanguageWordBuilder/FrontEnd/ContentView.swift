@@ -9,24 +9,6 @@ import SwiftUI
 
 let stateChangeCollectionTime: Int = 10
 
-fileprivate func allLetterButtons() -> some View {
-	return ForEach(0 ..< appState.numberOfColumns, id: \.self) { column in
-		VStack {
-			Spacer()
-			ForEach(
-				columnStart(column)
-					..<
-					columnStart(column + 1),
-				id: \.self) { index in
-				
-				singleLetterButtons(index)
-				
-				Spacer()
-			}
-		}
-		Spacer()
-	}
-}
 
 fileprivate func singleLetterButtons(_ index: Int) -> some View {
 	return ZStack {
@@ -48,6 +30,26 @@ fileprivate func singleLetterButtons(_ index: Int) -> some View {
 		}
 	}
 }
+
+fileprivate func allLetterButtons() -> some View {
+	return ForEach(0 ..< appState.numberOfColumns, id: \.self) { column in
+		VStack {
+			Spacer()
+			ForEach(
+				columnStart(column)
+					..<
+					columnStart(column + 1),
+				id: \.self) { index in
+				
+				singleLetterButtons(index)
+				
+				Spacer()
+			}
+		}
+		Spacer()
+	}
+}
+
 
 fileprivate func hintButton() -> some View {
 	return Button(action: {
@@ -76,6 +78,29 @@ fileprivate func hintButton() -> some View {
 	}
 }
 
+fileprivate func skipButton() -> some View {
+	return Button(action: {
+		wordSelectionProbabilities[appState.currentWordIndex].largeFailure()
+		chooseNewWord()
+	}) {
+		Text("Skip ->")
+			.fontWeight(.bold)
+			.foregroundColor(Color.orange)
+	}
+}
+
+fileprivate func hintAndSkipButtons() -> some View {
+	return HStack {
+		Spacer()
+		
+		hintButton()
+		
+		Spacer()
+		skipButton()
+		Spacer()
+	}
+}
+
 struct ContentView: View {
 	
 	init() {
@@ -91,6 +116,7 @@ struct ContentView: View {
 	}
 	
 	
+	
 	var body: some View {
 		ForEach(version ..< version + 1, id: \.self) { _ in
 			VStack {
@@ -101,30 +127,17 @@ struct ContentView: View {
 				Text("Score: \(score)")
 				HStack {
 					Spacer()
-				
+					
 					allLetterButtons()
-				
+					
 				}
 				Spacer()
 				Text(appState.currentAnswer)
 					.font(.title)
 					.frame(minHeight: 40)
-				HStack {
-					Spacer()
-					
-					hintButton()
-					
-					Spacer()
-					Button(action: {
-						wordSelectionProbabilities[appState.currentWordIndex].largeFailure()
-						chooseNewWord()
-					}) {
-						Text("Skip ->")
-							.fontWeight(.bold)
-							.foregroundColor(Color.orange)
-					}
-					Spacer()
-				} //end of HStack for bottom buttons
+				
+				hintAndSkipButtons()
+				
 			} //end of main VStack
 		}
 		.onReceive(
