@@ -22,8 +22,8 @@ fileprivate func allLetterButtons() -> some View {
 				singleLetterButtons(index)
 				
 				Spacer()
-			} //end of inner ForEach
-		} //end of VStack
+			}
+		}
 		Spacer()
 	}
 }
@@ -49,6 +49,32 @@ fileprivate func singleLetterButtons(_ index: Int) -> some View {
 	}
 }
 
+fileprivate func hintButton() -> some View {
+	return Button(action: {
+		//print("Hint button works!")
+		
+		if appState.currentWord.answer.hasPrefix(appState.currentAnswer) || appState.currentAnswer.count == 0 {
+			if appState.currentAnswer.count < appState.currentWord.answer.count - 1 {
+				wordSelectionProbabilities[appState.currentWordIndex].smallFailure()
+				let nextCorrectLetterIndex = appState.currentAnswer.count
+				let nextCorrectLetter = String(appState.currentWord.answer[nextCorrectLetterIndex])
+				let buttonIndex = findButtonIndex(letter: nextCorrectLetter, whenSelected: false)
+				selectLetter(buttonIndex)
+			}
+		} else {
+			//adios => "aso"
+			wordSelectionProbabilities[appState.currentWordIndex].smallFailure()
+			let currentAnswerIndex = appState.currentAnswer.count - 1
+			let letterToUnselect = String(appState.currentAnswer.last!)
+			let buttonIndex = findButtonIndex(letter: letterToUnselect, whenSelected: true)
+			unselectLetter(currentAnswerIndex: currentAnswerIndex, buttonIndex: buttonIndex)
+		}
+	}) {
+		Text("Hint")
+			.fontWeight(.bold)
+			.foregroundColor(Color.blue)
+	}
+}
 
 struct ContentView: View {
 	
@@ -64,6 +90,7 @@ struct ContentView: View {
 		print("new version is \(version)")
 	}
 	
+	
 	var body: some View {
 		ForEach(version ..< version + 1, id: \.self) { _ in
 			VStack {
@@ -77,37 +104,16 @@ struct ContentView: View {
 				
 					allLetterButtons()
 				
-				} //end of column-HStack
+				}
 				Spacer()
 				Text(appState.currentAnswer)
 					.font(.title)
 					.frame(minHeight: 40)
 				HStack {
 					Spacer()
-					Button(action: {
-						//print("Hint button works!")
-						
-						if appState.currentWord.answer.hasPrefix(appState.currentAnswer) || appState.currentAnswer.count == 0 {
-							if appState.currentAnswer.count < appState.currentWord.answer.count - 1 {
-								wordSelectionProbabilities[appState.currentWordIndex].smallFailure()
-								let nextCorrectLetterIndex = appState.currentAnswer.count
-								let nextCorrectLetter = String(appState.currentWord.answer[nextCorrectLetterIndex])
-								let buttonIndex = findButtonIndex(letter: nextCorrectLetter, whenSelected: false)
-								selectLetter(buttonIndex)
-							}
-						} else {
-							//adios => "aso"
-							wordSelectionProbabilities[appState.currentWordIndex].smallFailure()
-							let currentAnswerIndex = appState.currentAnswer.count - 1
-							let letterToUnselect = String(appState.currentAnswer.last!)
-							let buttonIndex = findButtonIndex(letter: letterToUnselect, whenSelected: true)
-							unselectLetter(currentAnswerIndex: currentAnswerIndex, buttonIndex: buttonIndex)
-						}
-					}) {
-						Text("Hint")
-							.fontWeight(.bold)
-							.foregroundColor(Color.blue)
-					}
+					
+					hintButton()
+					
 					Spacer()
 					Button(action: {
 						wordSelectionProbabilities[appState.currentWordIndex].largeFailure()
