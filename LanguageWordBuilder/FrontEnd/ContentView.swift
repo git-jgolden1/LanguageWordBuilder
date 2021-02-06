@@ -29,7 +29,7 @@ struct ContentView: View {
 		ForEach(version ..< version + 1, id: \.self) { _ in
 			VStack {
 				Spacer()
-				Text(currentWord.questionDescription)
+				Text(appState.currentWord.questionDescription)
 					.font(.title)
 				Spacer()
 				Text("Score: \(score)")
@@ -47,7 +47,7 @@ struct ContentView: View {
 									Button(action: {
 										selectLetter(index)
 									}) {
-										Text(scrambledLetters[index])
+										Text(appState.scrambledLetters[index])
 											.fontWeight(.bold)
 											.font(.title)
 											.padding(10)
@@ -68,7 +68,7 @@ struct ContentView: View {
 					} //end of outer ForEach
 				} //end of column-HStack
 				Spacer()
-				Text(currentAnswer)
+				Text(appState.currentAnswer)
 					.font(.title)
 					.frame(minHeight: 40)
 				HStack {
@@ -76,19 +76,19 @@ struct ContentView: View {
 					Button(action: {
 						//print("Hint button works!")
 						
-						if currentWord.answer.hasPrefix(currentAnswer) || currentAnswer.count == 0 {
-							if currentAnswer.count < currentWord.answer.count - 1 {
-								wordSelectionProbabilities[currentWordIndex].smallFailure()
-								let nextCorrectLetterIndex = currentAnswer.count
-								let nextCorrectLetter = String(currentWord.answer[nextCorrectLetterIndex])
+						if appState.currentWord.answer.hasPrefix(appState.currentAnswer) || appState.currentAnswer.count == 0 {
+							if appState.currentAnswer.count < appState.currentWord.answer.count - 1 {
+								wordSelectionProbabilities[appState.currentWordIndex].smallFailure()
+								let nextCorrectLetterIndex = appState.currentAnswer.count
+								let nextCorrectLetter = String(appState.currentWord.answer[nextCorrectLetterIndex])
 								let buttonIndex = findButtonIndex(letter: nextCorrectLetter, whenSelected: false)
 								selectLetter(buttonIndex)
 							}
 						} else {
 							//adios => "aso"
-							wordSelectionProbabilities[currentWordIndex].smallFailure()
-							let currentAnswerIndex = currentAnswer.count - 1
-							let letterToUnselect = String(currentAnswer.last!)
+							wordSelectionProbabilities[appState.currentWordIndex].smallFailure()
+							let currentAnswerIndex = appState.currentAnswer.count - 1
+							let letterToUnselect = String(appState.currentAnswer.last!)
 							let buttonIndex = findButtonIndex(letter: letterToUnselect, whenSelected: true)
 							unselectLetter(currentAnswerIndex: currentAnswerIndex, buttonIndex: buttonIndex)
 						}
@@ -99,7 +99,7 @@ struct ContentView: View {
 					}
 					Spacer()
 					Button(action: {
-						wordSelectionProbabilities[currentWordIndex].largeFailure()
+						wordSelectionProbabilities[appState.currentWordIndex].largeFailure()
 						chooseNewWord()
 					}) {
 						Text("Skip ->")

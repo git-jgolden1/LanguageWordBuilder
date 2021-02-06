@@ -35,7 +35,7 @@ class WordSelectionProbability {
 	private static let largeFailureRatio = 2 * pow(smallFailureRatio, 3)
 	var value: Double
 	func printValue() {
-		print("\(words[currentWordIndex].question) :  \(value)")
+		print("\(words[appState.currentWordIndex].question) :  \(value)")
 	}
 	
 	func success() {
