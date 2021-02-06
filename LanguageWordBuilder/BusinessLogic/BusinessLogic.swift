@@ -67,7 +67,7 @@ func selectLetter(_ absoluteIndex: Int) {
 		appState.currentAnswer += appState.scrambledLetters[absoluteIndex]
 	}
 	if appState.currentAnswer == appState.currentWord.answer {
-		score += 1
+		appState.score += 1
 		chooseNewWord()
 	}
 }

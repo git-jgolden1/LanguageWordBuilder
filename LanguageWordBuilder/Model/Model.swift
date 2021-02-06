@@ -15,14 +15,13 @@ class AppState {
 	var currentAnswer = ""
 	var currentWord = words[0]
 	var scrambledLetters: [String] = []
+	var score = 0
 	
 	let subject = PassthroughSubject<ViewRefreshKey, Never>()
 	
 	@WrappedObservable var numberOfColumns = 2
 	@WrappedObservable var isSelected = [Bool]()
 }
-
-var score = 0
 
 class Observable<G> {
 	

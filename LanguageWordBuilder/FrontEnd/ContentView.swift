@@ -101,6 +101,15 @@ fileprivate func hintAndSkipButtons() -> some View {
 	}
 }
 
+fileprivate func heading() -> some View {
+	return VStack {
+		Text(appState.currentWord.questionDescription)
+			.font(.title)
+		Text("Score: \(appState.score)")
+			.padding()
+	}
+}
+
 struct ContentView: View {
 	
 	init() {
@@ -114,33 +123,21 @@ struct ContentView: View {
 		version += 1
 		print("new version is \(version)")
 	}
-	
-	
-	
-	fileprivate func heading() -> some View {
-		return VStack {
-			Text(appState.currentWord.questionDescription)
-				.font(.title)
-			Text("Score: \(score)")
-				.padding()
-		}
-	}
-	
+
 	var body: some View {
 		ForEach(version ..< version + 1, id: \.self) { _ in
 			VStack {
 
 				Spacer()
-
 				heading()
 				
 				HStack {
 					Spacer()
-					
 					allLetterButtons()
-					
 				}
+				
 				Spacer()
+				
 				Text(appState.currentAnswer)
 					.font(.title)
 					.frame(minHeight: 40)
