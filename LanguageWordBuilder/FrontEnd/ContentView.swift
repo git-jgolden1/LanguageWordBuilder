@@ -9,6 +9,47 @@ import SwiftUI
 
 let stateChangeCollectionTime: Int = 10
 
+fileprivate func allLetterButtons() -> some View {
+	return ForEach(0 ..< appState.numberOfColumns, id: \.self) { column in
+		VStack {
+			Spacer()
+			ForEach(
+				columnStart(column)
+					..<
+					columnStart(column + 1),
+				id: \.self) { index in
+				
+				singleLetterButtons(index)
+				
+				Spacer()
+			} //end of inner ForEach
+		} //end of VStack
+		Spacer()
+	}
+}
+
+fileprivate func singleLetterButtons(_ index: Int) -> some View {
+	return ZStack {
+		Button(action: {
+			selectLetter(index)
+		}) {
+			Text(appState.scrambledLetters[index])
+				.fontWeight(.bold)
+				.font(.title)
+				.padding(10)
+				.background(appState.isSelected[index] ? Color.green : Color.black)
+				.cornerRadius(24)
+				.foregroundColor(.white)
+				.padding(10)
+				.overlay(
+					RoundedRectangle(cornerRadius: 24)
+						.stroke(Color.black, lineWidth: 3)
+				)
+		}
+	}
+}
+
+
 struct ContentView: View {
 	
 	init() {
@@ -23,8 +64,6 @@ struct ContentView: View {
 		print("new version is \(version)")
 	}
 	
-
-	
 	var body: some View {
 		ForEach(version ..< version + 1, id: \.self) { _ in
 			VStack {
@@ -35,37 +74,9 @@ struct ContentView: View {
 				Text("Score: \(score)")
 				HStack {
 					Spacer()
-					ForEach(0 ..< appState.numberOfColumns, id: \.self) { column in
-						VStack {
-							Spacer()
-							ForEach(
-								columnStart(column)
-									..<
-									columnStart(column + 1),
-								id: \.self) { index in
-								ZStack {
-									Button(action: {
-										selectLetter(index)
-									}) {
-										Text(appState.scrambledLetters[index])
-											.fontWeight(.bold)
-											.font(.title)
-											.padding(10)
-											.background(appState.isSelected[index] ? Color.green : Color.black)
-											.cornerRadius(24)
-											.foregroundColor(.white)
-											.padding(10)
-											.overlay(
-												RoundedRectangle(cornerRadius: 24)
-													.stroke(Color.black, lineWidth: 3)
-											)
-									} //end of button UI
-								} //end of ZStack
-								Spacer()
-							} //end of inner ForEach
-						} //end of VStack
-						Spacer()
-					} //end of outer ForEach
+				
+					allLetterButtons()
+				
 				} //end of column-HStack
 				Spacer()
 				Text(appState.currentAnswer)
