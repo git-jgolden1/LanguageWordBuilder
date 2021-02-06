@@ -117,14 +117,23 @@ struct ContentView: View {
 	
 	
 	
+	fileprivate func heading() -> some View {
+		return VStack {
+			Text(appState.currentWord.questionDescription)
+				.font(.title)
+			Text("Score: \(score)")
+				.padding()
+		}
+	}
+	
 	var body: some View {
 		ForEach(version ..< version + 1, id: \.self) { _ in
 			VStack {
+
 				Spacer()
-				Text(appState.currentWord.questionDescription)
-					.font(.title)
-				Spacer()
-				Text("Score: \(score)")
+
+				heading()
+				
 				HStack {
 					Spacer()
 					
@@ -138,7 +147,7 @@ struct ContentView: View {
 				
 				hintAndSkipButtons()
 				
-			} //end of main VStack
+			}
 		}
 		.onReceive(
 			appState.subject
