@@ -73,3 +73,4 @@ func addAppStateListener<T>(_ o: Observable<T>) {
 			{ appState.subject.send(ViewRefreshKey.mainView) }
 	}
 }
+

@@ -124,22 +124,6 @@ struct ContentView: View {
 		Spacer()
 	}
 	
-	func columnStart(_ column: Int) -> Int {
-//		print("\(numberOfColumns) = number of columns")
-		return scrambledLetters.count * column / appState.numberOfColumns
-	}
-	
-	func findButtonIndex(letter: String, whenSelected: Bool) -> Int {
-		var index: Int? = nil
-		for i in appState.isSelected.indices {
-			if scrambledLetters[i] == letter && appState.isSelected[i] == whenSelected {
-				index = i
-				break
-			}
-		}
-		assert(index != nil)
-		return index!
-	}
 }
 
 struct ContentView_Previews: PreviewProvider {
