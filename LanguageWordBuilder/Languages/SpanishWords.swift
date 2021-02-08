@@ -50,7 +50,7 @@ let spanishWordSource = [
 	["palabra"], ["word"],
 	["mal", "no se siente bien"], ["sick"],
 	["aburrido"], ["bored"],
-	["cuidad"], ["city"],
+	["ciudad"], ["city"],
 	["calle"], ["street"],
 	["juguete"], ["toy"],
 	["jugar"], ["to play"],
