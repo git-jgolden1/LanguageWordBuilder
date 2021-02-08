@@ -11,11 +11,11 @@ import Combine
 
 class AppState {
 	
-	var currentWordIndex = 0
-	var score = 0
-	var currentAnswer = ""
-	var currentWord = words[0]
-	var scrambledLetters: [String] = []
+	@WrappedObservable var currentWordIndex = 0
+	@WrappedObservable var score = 0
+	@WrappedObservable var currentAnswer = ""
+	@WrappedObservable var currentWord = words[0]
+	@WrappedObservable var scrambledLetters: [String] = []
 	
 	let subject = PassthroughSubject<ViewRefreshKey, Never>()
 	
