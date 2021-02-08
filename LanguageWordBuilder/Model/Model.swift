@@ -12,10 +12,10 @@ import Combine
 class AppState {
 	
 	var currentWordIndex = 0
+	var score = 0
 	var currentAnswer = ""
 	var currentWord = words[0]
 	var scrambledLetters: [String] = []
-	var score = 0
 	
 	let subject = PassthroughSubject<ViewRefreshKey, Never>()
 	
