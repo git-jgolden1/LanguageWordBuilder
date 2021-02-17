@@ -113,8 +113,8 @@ fileprivate func heading() -> some View {
 struct ContentView: View {
 	
 	init() {
-		addAppStateListener(appState.$numberOfColumns)
-		addAppStateListener(appState.$isSelected)
+		addAppStateListener(appState.$numberOfColumns, listenerType: .frontEnd)
+		addAppStateListener(appState.$isSelected, listenerType: .frontEnd)
 	}
 	
 	@State var version = 1

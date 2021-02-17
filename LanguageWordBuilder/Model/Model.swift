@@ -40,10 +40,10 @@ class Observable<G> {
 	
 	}
 	
-	private var listeners: [String: () -> Void] = [:]
+	private var listeners: [ListenerType: () -> Void] = [:]
 	
-	func addListener(name: String, _ listener: @escaping () -> Void) {
-		listeners[name] = listener
+	func addListener(type l: ListenerType, _ listener: @escaping () -> Void) {
+		listeners[l] = listener
 		print("Listener added")
 	}
 	
@@ -53,8 +53,8 @@ class Observable<G> {
 //		}
 //	}
 	
-	func hasListener(name: String) -> Bool {
-		return listeners.keys.contains(name)
+	func hasListener(type l: ListenerType) -> Bool {
+		return listeners.keys.contains(l)
 	}
 	
 	init(_ state: G) {
@@ -70,9 +70,14 @@ enum ViewRefreshKey {
 	case mainView
 }
 
-func addAppStateListener<T>(_ o: Observable<T>) {
-	if !o.hasListener(name: "frontEnd") {
-		o.addListener(name: "frontEnd")
+enum ListenerType {
+	case frontEnd
+	case backEnd
+}
+
+func addAppStateListener<T>(_ o: Observable<T>, listenerType l: ListenerType) {
+	if !o.hasListener(type: l) {
+		o.addListener(type: l)
 			{ appState.subject.send(ViewRefreshKey.mainView) }
 	}
 }
