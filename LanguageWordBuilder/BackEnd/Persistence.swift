@@ -25,6 +25,8 @@ public struct PersistenceController {
 		return result
 	}()
 	
+	let context: NSManagedObjectContext
+	
 	let container: NSPersistentContainer
 	
 	init(inMemory: Bool = false) {
@@ -48,6 +50,28 @@ public struct PersistenceController {
 				fatalError("Unresolved error \(error), \(error.userInfo)")
 			}
 		})
+		self.context = container.viewContext
 		setUpBackEndListeners()
+		_ = appState.subject
+			.filter({ $0 == .backEnd })
+			.collect(.byTime(RunLoop.main, .milliseconds(stateChangeCollectionTime)))
+			.subscribe(on: RunLoop.main)
+			.sink()
+			{ _ in
+				saveModel()
+			}
+		loadModel()
+	}
+	
+	func save() {
+		let context = container.viewContext
+		
+		if context.hasChanges {
+			do {
+				try context.save()
+			} catch {
+				fatalError("Database problem")
+			}
+		}
 	}
 }

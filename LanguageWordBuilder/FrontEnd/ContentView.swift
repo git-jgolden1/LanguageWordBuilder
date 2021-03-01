@@ -150,7 +150,7 @@ struct ContentView: View {
 			appState.subject
 				.filter({ $0 == .mainView })
 				.collect(.byTime(RunLoop.main, .milliseconds(stateChangeCollectionTime)))
-		) { x in
+		) { _ in
 			refresh()
 			print("TopView: view state changed to \(self.version)")
 		}

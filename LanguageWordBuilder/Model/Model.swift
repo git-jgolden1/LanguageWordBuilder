@@ -17,7 +17,7 @@ class AppState {
 	@WrappedObservable var currentWord = words[0]
 	@WrappedObservable var scrambledLetters: [String] = []
 	
-	let subject = PassthroughSubject<ViewRefreshKey, Never>()
+	let subject = PassthroughSubject<RefreshKey, Never>()
 	
 	@WrappedObservable var numberOfColumns = 2
 	@WrappedObservable var isSelected = [Bool]()
@@ -66,8 +66,9 @@ class Observable<G> {
 
 var appState = AppState()
 
-enum ViewRefreshKey {
+enum RefreshKey {
 	case mainView
+	case backEnd
 }
 
 enum ListenerType {
@@ -75,10 +76,25 @@ enum ListenerType {
 	case backEnd
 }
 
+enum FatalError: Error {
+	case only(_ message: String)
+}
+
 func addAppStateListener<T>(_ o: Observable<T>, listenerType l: ListenerType) {
+	var key: RefreshKey = .backEnd
+	
+	if l == .frontEnd {
+		key = .mainView
+	} else if l == .backEnd {
+		key = .backEnd
+	} else {
+		assert(false, "invalid listener type")
+	}
+	
 	if !o.hasListener(type: l) {
-		o.addListener(type: l)
-			{ appState.subject.send(ViewRefreshKey.mainView) }
+		o.addListener(type: l) {
+			appState.subject.send(key)
+		}
 	}
 }
 
