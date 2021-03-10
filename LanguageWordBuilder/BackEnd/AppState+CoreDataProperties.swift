@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 
-extension AppStateDB {
+extension AppStateDB : Identifiable {
 	
 	@nonobjc public class func fetchRequest() -> NSFetchRequest<AppStateDB> {
 		return NSFetchRequest<AppStateDB>(entityName: "AppState")
@@ -26,9 +26,5 @@ extension AppStateDB {
 	@NSManaged public var scrambledLetters: String
 	@NSManaged public var numberOfColumns: Int16
 	@NSManaged public var isSelected: String
-	
-}
-
-extension AppStateDB : Identifiable {
 	
 }
