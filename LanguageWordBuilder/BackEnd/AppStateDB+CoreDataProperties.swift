@@ -1,8 +1,8 @@
 //
-//  AppState+CoreDataProperties.swift
+//  AppStateDB+CoreDataProperties.swift
 //  LanguageWordBuilder
 //
-//  Created by Jonathan Gurr on 2/8/21.
+//  Created by Jonathan Gurr on 3/10/21.
 //
 //
 
@@ -11,9 +11,8 @@ import CoreData
 
 
 extension AppStateDB : Identifiable {
-	
 	@nonobjc public class func fetchRequest() -> NSFetchRequest<AppStateDB> {
-		return NSFetchRequest<AppStateDB>(entityName: "AppState")
+		return NSFetchRequest<AppStateDB>(entityName: "AppStateDB")
 	}
 	
 	func save() {
@@ -26,5 +25,5 @@ extension AppStateDB : Identifiable {
 	@NSManaged public var scrambledLetters: String
 	@NSManaged public var numberOfColumns: Int16
 	@NSManaged public var isSelected: String
-	
 }
+

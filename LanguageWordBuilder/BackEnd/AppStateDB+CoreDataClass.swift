@@ -1,8 +1,8 @@
 //
-//  AppState+CoreDataClass.swift
+//  AppStateDB+CoreDataClass.swift
 //  LanguageWordBuilder
 //
-//  Created by Jonathan Gurr on 2/8/21.
+//  Created by Jonathan Gurr on 3/10/21.
 //
 //
 
