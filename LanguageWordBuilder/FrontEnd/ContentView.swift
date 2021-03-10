@@ -148,7 +148,7 @@ struct ContentView: View {
 		}
 		.onReceive(
 			appState.subject
-				.filter({ $0 == .mainView })
+				.filter({ $0 == .frontEnd })
 				.collect(.byTime(RunLoop.main, .milliseconds(stateChangeCollectionTime)))
 		) { _ in
 			refresh()
