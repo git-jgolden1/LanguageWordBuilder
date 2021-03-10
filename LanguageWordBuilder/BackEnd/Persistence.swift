@@ -60,7 +60,6 @@ public struct PersistenceController {
 			{ _ in
 				saveModel()
 			}
-		loadModel()
 	}
 	
 	func save() {
