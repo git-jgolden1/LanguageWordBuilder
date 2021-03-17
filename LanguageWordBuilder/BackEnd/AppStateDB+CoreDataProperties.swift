@@ -2,7 +2,7 @@
 //  AppStateDB+CoreDataProperties.swift
 //  LanguageWordBuilder
 //
-//  Created by Jonathan Gurr on 3/10/21.
+//  Created by Jonathan Gurr on 3/15/21.
 //
 //
 
@@ -10,7 +10,8 @@ import Foundation
 import CoreData
 
 
-extension AppStateDB : Identifiable {
+extension AppStateDB {
+
 	@nonobjc public class func fetchRequest() -> NSFetchRequest<AppStateDB> {
 		return NSFetchRequest<AppStateDB>(entityName: "AppStateDB")
 	}
@@ -27,3 +28,6 @@ extension AppStateDB : Identifiable {
 	@NSManaged public var isSelected: String
 }
 
+extension AppStateDB : Identifiable {
+
+}
