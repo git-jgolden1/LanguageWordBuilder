@@ -656,22 +656,70 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "12"
             endingLineNumber = "12"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "setUpBackEndListeners()"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "BCE6F308-F22B-4190-A078-F279D3B4032F"
-            shouldBeEnabled = "Yes"
+            uuid = "D1CDC7B5-8207-4CB8-A5EA-D530FD0460AD"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "LanguageWordBuilder/BackEnd/BackEnd.swift"
+            filePath = "LanguageWordBuilder/BackEnd/Persistence.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
+            startingLineNumber = "11"
+            endingLineNumber = "11"
+            landmarkName = "PersistenceController"
+            landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "D1CDC7B5-8207-4CB8-A5EA-D530FD0460AD - 2e0069c22ac2d02c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "globalinit_33_6A68A1B4763B2F518382D726B83EBD5E_func0"
+                  moduleName = "LanguageWordBuilder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jgolden1/iphoneApps/LanguageWordBuilder/LanguageWordBuilder/BackEnd/Persistence.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "4">
+               </Location>
+               <Location
+                  uuid = "D1CDC7B5-8207-4CB8-A5EA-D530FD0460AD - 873b62bfbb879730"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LanguageWordBuilder.PersistenceController.shared.unsafeMutableAddressor : LanguageWordBuilder.PersistenceController"
+                  moduleName = "LanguageWordBuilder"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jgolden1/iphoneApps/LanguageWordBuilder/LanguageWordBuilder/BackEnd/Persistence.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "11"
+                  endingLineNumber = "11"
+                  offsetFromSymbolStart = "4">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "16DE8B28-9E08-4110-9BD6-B46CC58AD279"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LanguageWordBuilder/FrontEnd/ContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "12"
+            endingLineNumber = "12"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
