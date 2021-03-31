@@ -34,13 +34,13 @@ let spanishWordSource = [
 	["triste"], ["sad"],
 	["feliz"], ["happy"],
 	["carro", "carro/coche/auto"], ["car"],
-	["tren"], ["train"],
+	["loco"], ["crazy"],
+	["qué"], ["what"],
 
 
 	//medium
 	["salud"], ["health"],
 	["quién"], ["who"],
-	["qué"], ["what"],
 	["por qué"], ["why"],
 	["porque"], ["because"],
 	["dónde"], ["where"],
@@ -48,7 +48,8 @@ let spanishWordSource = [
 	["cómo"], ["how"],
 	["como"], ["like", "like or as"],
 	["palabra"], ["word"],
-	["mal", "no se siente bien"], ["sick"],
+	["tren"], ["train"],
+	["mal", "no se siente bien (mal)"], ["sick"],
 	["aburrido"], ["bored"],
 	["ciudad"], ["city"],
 	["calle"], ["street"],

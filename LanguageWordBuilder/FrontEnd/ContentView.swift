@@ -137,7 +137,7 @@ struct ContentView: View {
 					Spacer()
 					allLetterButtons()
 						.alert(isPresented: $showingWordReportAlert) {
-							Alert(title: Text("Good job!"), message: Text("Text"), dismissButton: .default(Text("OK! 👍")))
+							Alert(title: Text("Good job!"), message: Text("Message"), dismissButton: .default(Text("OK! 👍")))
 						}
 				}
 				
