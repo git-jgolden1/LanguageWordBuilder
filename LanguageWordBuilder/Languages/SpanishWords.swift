@@ -53,10 +53,10 @@ let spanishWordSource = [
 	["ciudad"], ["city"],
 	["calle"], ["street"],
 	["juguete"], ["toy"],
-	["jugar"], ["to play"],
-	["cantar"], ["to sing"],
-	["ser"], ["to be", "to be (permanent)"],
-	["estar"], ["to be", "to be (temporary)"],
+	["jugar"], ["play", "to play"],
+	["cantar"], ["sing", "to sing"],
+	["ser"], ["be", "to be (permanent)"],
+	["estar"], ["be", "to be (temporary)"],
 //	[""], [""],
 
 	

@@ -21,7 +21,7 @@ struct Word: Hashable {
 	}
 }
 
-let wordSource = tagalogWordSource
+let wordSource = spanishWordSource
 
 var words: [Word] = stride(from: 0, to: wordSource.count - 1, by: 2).map {
 	let foreignDescription = wordSource[$0].count > 1 ? wordSource[$0][1] : wordSource[$0][0]

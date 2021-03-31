@@ -32,6 +32,7 @@ fileprivate func singleLetterButtons(_ index: Int) -> some View {
 }
 
 fileprivate func allLetterButtons() -> some View {
+	
 	return ForEach(0 ..< appState.numberOfColumns, id: \.self) { column in
 		VStack {
 			Spacer()
@@ -118,7 +119,8 @@ struct ContentView: View {
 	}
 	
 	@State var version = 1
-	
+	@State var showingWordReportAlert = false
+
 	func refresh() {
 		version += 1
 		print("new version is \(version)")
@@ -134,6 +136,9 @@ struct ContentView: View {
 				HStack {
 					Spacer()
 					allLetterButtons()
+						.alert(isPresented: $showingWordReportAlert) {
+							Alert(title: Text("Good job!"), message: Text("Text"), dismissButton: .default(Text("OK! 👍")))
+						}
 				}
 				
 				Spacer()
@@ -151,7 +156,11 @@ struct ContentView: View {
 				.filter({ $0 == .frontEnd })
 				.collect(.byTime(RunLoop.main, .milliseconds(stateChangeCollectionTime)))
 		) { _ in
-			refresh()
+			if appState.showingWordReportAlert != showingWordReportAlert {
+				showingWordReportAlert = appState.showingWordReportAlert
+			} else {
+				refresh()
+			}
 			print("TopView: view state changed to \(self.version)")
 		}
 		.onAppear() {
