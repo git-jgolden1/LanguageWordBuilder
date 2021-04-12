@@ -20,23 +20,22 @@ func setUpBackEndListeners() {
 func saveModel() {
 	let context = PersistenceController.shared.container.viewContext
 	let appStateDB = AppStateDB(context: context)
-	appStateDB.currentAnswer = "bla"
-//	appStateDB.currentWordIndex = Int32(appState.currentWordIndex)
-//	appStateDB.isSelected = ""
-//	for b in appState.isSelected {
-//		if b {
-//			appStateDB.isSelected += "t"
-//		} else {
-//			appStateDB.isSelected += "f"
-//		}
-//	}
-//	appStateDB.numberOfColumns = Int16(appState.numberOfColumns)
-//	appStateDB.score = Int16(appState.score)
-//	appStateDB.scrambledLetters = ""
-//	for letter in appState.scrambledLetters {
-//		appStateDB.scrambledLetters += letter
-//	}
-//	appStateDB.save()
+	appStateDB.currentWordIndex = Int32(appState.currentWordIndex)
+	appStateDB.isSelected = ""
+	for b in appState.isSelected {
+		if b {
+			appStateDB.isSelected += "t"
+		} else {
+			appStateDB.isSelected += "f"
+		}
+	}
+	appStateDB.numberOfColumns = Int16(appState.numberOfColumns)
+	appStateDB.score = Int16(appState.score)
+	appStateDB.scrambledLetters = ""
+	for letter in appState.scrambledLetters {
+		appStateDB.scrambledLetters += letter
+	}
+	appStateDB.save()
 }
 
 func loadModel() {

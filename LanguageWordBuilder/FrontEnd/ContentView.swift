@@ -137,7 +137,10 @@ struct ContentView: View {
 					Spacer()
 					allLetterButtons()
 						.alert(isPresented: $showingWordReportAlert) {
-							Alert(title: Text("Good job!"), message: Text("Message"), dismissButton: .default(Text("OK! 👍")))
+							Alert(title: Text("Good job!"), message: Text("\(words[appState.currentWordIndex].questionDescription) means \(words[appState.currentWordIndex].answer)"), dismissButton: .default(Text("OK! 👍")) {
+								appState.showingWordReportAlert = false
+								chooseNewWord()
+							})
 						}
 				}
 				
@@ -176,3 +179,4 @@ struct ContentView_Previews: PreviewProvider {
 		ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 	}
 }
+
