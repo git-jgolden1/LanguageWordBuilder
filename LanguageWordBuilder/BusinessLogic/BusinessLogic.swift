@@ -42,14 +42,12 @@ func chooseNewWord() {
 	while previousWordAnswer == appState.currentWord.answer || !wordSelectionProbabilities[appState.currentWordIndex].shouldSelect() {
 		var loopCount = 1
 		appState.currentWordIndex = Int.random(in: 0 ..< words.count)
-		appState.currentWord = words[appState.currentWordIndex]
 		loopCount += 1
 		assert(loopCount < 10)
 	}
 	
 	if Bool.random() {
-		appState.currentWord = appState.currentWord.switchOrder()
-		//			print("order switched!")
+		appState.switchOrder()
 	}
 	
 	wordSelectionProbabilities[appState.currentWordIndex].success()

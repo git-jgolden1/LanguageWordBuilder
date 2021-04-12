@@ -10,11 +10,25 @@ import Combine
 
 
 class AppState {
-	
+	private enum WordOrder {
+		case nativeToForeign, foreignToNative
+	}
+	private var wordOrder: WordOrder = .nativeToForeign
+	func switchOrder() {
+		wordOrder = wordOrder == .nativeToForeign ? .foreignToNative : .nativeToForeign
+	}
 	@WrappedObservable var currentWordIndex = 0
 	@WrappedObservable var score = 0
 	@WrappedObservable var currentAnswer = ""
-	@WrappedObservable var currentWord = words[0]
+	var currentWord: Word {
+		var result: Word
+		if wordOrder == .nativeToForeign {
+			result = words[currentWordIndex]
+		} else {
+			result = words[currentWordIndex].switchOrder()
+		}
+		return result
+	}
 	@WrappedObservable var scrambledLetters: [String] = []
 	
 	let subject = PassthroughSubject<ListenerType, Never>()

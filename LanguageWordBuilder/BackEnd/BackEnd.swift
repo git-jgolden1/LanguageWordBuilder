@@ -9,7 +9,6 @@ import Foundation
 
 func setUpBackEndListeners() {
 	addAppStateListener(appState.$currentAnswer, listenerType: .backEnd)
-	addAppStateListener(appState.$currentWord, listenerType: .backEnd)
 	addAppStateListener(appState.$currentWordIndex, listenerType: .backEnd)
 	addAppStateListener(appState.$isSelected, listenerType: .backEnd)
 	addAppStateListener(appState.$numberOfColumns, listenerType: .backEnd)
