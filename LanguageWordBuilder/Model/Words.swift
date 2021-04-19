@@ -21,12 +21,12 @@ struct Word: Hashable {
 	}
 }
 
-let wordSource = spanishWordSource
 
-var words: [Word] = stride(from: 0, to: wordSource.count - 1, by: 2).map {
-	let foreignDescription = wordSource[$0].count > 1 ? wordSource[$0][1] : wordSource[$0][0]
-	let nativeDescription = wordSource[$0 + 1].count > 1 ? wordSource[$0 + 1][1] : wordSource[$0 + 1][0]
-	return Word(question: wordSource[$0][0], answer: wordSource[$0 + 1][0], questionDescription: foreignDescription, answerDescription: nativeDescription)
+
+var words: [Word] = stride(from: 0, to: appState.wordSource.count - 1, by: 2).map {
+	let foreignDescription = appState.wordSource[$0].count > 1 ? appState.wordSource[$0][1] : appState.wordSource[$0][0]
+	let nativeDescription = appState.wordSource[$0 + 1].count > 1 ? appState.wordSource[$0 + 1][1] : appState.wordSource[$0 + 1][0]
+	return Word(question: appState.wordSource[$0][0], answer: appState.wordSource[$0 + 1][0], questionDescription: foreignDescription, answerDescription: nativeDescription)
 }
 
 class WordSelectionProbability {

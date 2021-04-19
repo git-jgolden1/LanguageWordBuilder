@@ -126,10 +126,10 @@ struct ContentView: View {
 		print("new version is \(version)")
 	}
 
-	var body: some View {
+	fileprivate func mainContent() -> some View {
 		ForEach(version ..< version + 1, id: \.self) { _ in
 			VStack {
-
+				
 				Spacer()
 				heading()
 				
@@ -154,6 +154,10 @@ struct ContentView: View {
 				
 			}
 		}
+	}
+	
+	var body: some View {
+		mainContent()
 		.onReceive(
 			appState.subject
 				.filter({ $0 == .frontEnd })
