@@ -116,64 +116,87 @@ struct ContentView: View {
 	init() {
 		addAppStateListener(appState.$numberOfColumns, listenerType: .frontEnd)
 		addAppStateListener(appState.$isSelected, listenerType: .frontEnd)
+		addAppStateListener(appState.$wordSource, listenerType: .frontEnd)
+		addAppStateListener(appState.$wordSourceWasSelected, listenerType: .frontEnd)
+		
 	}
 	
 	@State var version = 1
 	@State var showingWordReportAlert = false
-
+	
 	func refresh() {
 		version += 1
 		print("new version is \(version)")
 	}
-
+	
 	fileprivate func mainContent() -> some View {
-		ForEach(version ..< version + 1, id: \.self) { _ in
-			VStack {
-				
+		VStack {
+			
+			Spacer()
+			heading()
+			
+			HStack {
 				Spacer()
-				heading()
-				
-				HStack {
-					Spacer()
-					allLetterButtons()
-						.alert(isPresented: $showingWordReportAlert) {
-							Alert(title: Text("Good job!"), message: Text("\(words[appState.currentWordIndex].questionDescription) means \(words[appState.currentWordIndex].answer)"), dismissButton: .default(Text("OK! 👍")) {
-								appState.showingWordReportAlert = false
-								chooseNewWord()
-							})
-						}
+				allLetterButtons()
+					.alert(isPresented: $showingWordReportAlert) {
+						Alert(title: Text("Good job!"), message: Text("\(words[appState.currentWordIndex].questionDescription) means \(words[appState.currentWordIndex].answer)"), dismissButton: .default(Text("OK! 👍")) {
+							appState.showingWordReportAlert = false
+							chooseNewWord()
+						})
+					}
+			}
+			
+			Spacer()
+			
+			Text(appState.currentAnswer)
+				.font(.title)
+				.frame(minHeight: 40)
+			
+			hintAndSkipButtons()
+			Spacer()
+		}
+	}
+	
+	fileprivate func startingView() -> some View {
+		VStack {
+			Text("What language would you like to learn today?")
+			HStack {
+				Button("Spanish") {
+					appState.wordSource = spanishWordSource
+					appState.wordSourceWasSelected = true
+					print("tapped Spanish")
 				}
-				
-				Spacer()
-				
-				Text(appState.currentAnswer)
-					.font(.title)
-					.frame(minHeight: 40)
-				
-				hintAndSkipButtons()
-				
+				Button("Tagalog") {
+					appState.wordSource = tagalogWordSource
+					appState.wordSourceWasSelected = true
+					print("tapped Tagalog")
+				}
 			}
 		}
 	}
 	
 	var body: some View {
-		mainContent()
-		.onReceive(
-			appState.subject
-				.filter({ $0 == .frontEnd })
-				.collect(.byTime(RunLoop.main, .milliseconds(stateChangeCollectionTime)))
-		) { _ in
-			if appState.showingWordReportAlert != showingWordReportAlert {
-				showingWordReportAlert = appState.showingWordReportAlert
-			} else {
-				refresh()
+		ForEach(version ..< version + 1, id: \.self) { _ in
+			ZStack {
+				if !appState.wordSourceWasSelected {
+					startingView()
+				} else {
+					mainContent()
+				}
 			}
-			print("TopView: view state changed to \(self.version)")
+			.onReceive(
+				appState.subject
+					.filter({ $0 == .frontEnd })
+					.collect(.byTime(RunLoop.main, .milliseconds(stateChangeCollectionTime)))
+			) { _ in
+				print("onReceive")
+				if appState.showingWordReportAlert != showingWordReportAlert {
+					showingWordReportAlert = appState.showingWordReportAlert
+				} else {
+					refresh()
+				}
+			}
 		}
-		.onAppear() {
-			print("appearing...")
-		}
-		Spacer()
 	}
 	
 }

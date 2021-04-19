@@ -37,6 +37,7 @@ class AppState {
 	@WrappedObservable var isSelected = [Bool]()
 	@WrappedObservable var showingWordReportAlert = false
 	@WrappedObservable var wordSource = spanishWordSource
+	@WrappedObservable var wordSourceWasSelected = false
 
 }
 
