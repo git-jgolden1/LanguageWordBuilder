@@ -8,7 +8,6 @@
 import Foundation
 import Combine
 
-
 class AppState {
 	private enum WordOrder {
 		case nativeToForeign, foreignToNative
@@ -40,6 +39,9 @@ class AppState {
 	@WrappedObservable var wordSourceWasSelected = false
 
 }
+
+
+let observable_empty = Observable<Bool>(false)
 
 class Observable<G> {
 	
@@ -93,10 +95,10 @@ enum FatalError: Error {
 	case only(_ message: String)
 }
 
-func addAppStateListener<T>(_ o: Observable<T>, listenerType l: ListenerType) {
+func addAppStateListener<T>(_ ob: ObservableBinding<T>, listenerType l: ListenerType) {
 	
-	if !o.hasListener(type: l) {
-		o.addListener(type: l) {
+	if !ob.observable.hasListener(type: l) {
+		ob.observable.addListener(type: l) {
 			appState.subject.send(l)
 		}
 	}

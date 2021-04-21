@@ -14,6 +14,8 @@ func setUpBackEndListeners() {
 	addAppStateListener(appState.$numberOfColumns, listenerType: .backEnd)
 	addAppStateListener(appState.$score, listenerType: .backEnd)
 	addAppStateListener(appState.$scrambledLetters, listenerType: .backEnd)
+	addAppStateListener(appState.$wordSource, listenerType: .backEnd)
+	addAppStateListener(appState.$wordSourceWasSelected, listenerType: .backEnd)
 }
 
 func saveModel() {

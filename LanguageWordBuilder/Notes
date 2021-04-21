@@ -6,8 +6,8 @@
 //
 /*
 Tasks:
-1. Button for changing language
-2. Backend storage using database
+1. Make the app persistent
+2. Make a settings tab where I can change the language
 
 Bugs:
 1: 

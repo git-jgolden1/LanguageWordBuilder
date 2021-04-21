@@ -9,7 +9,6 @@ import SwiftUI
 
 let stateChangeCollectionTime: Int = 10
 
-
 fileprivate func singleLetterButtons(_ index: Int) -> some View {
 	return ZStack {
 		Button(action: {
@@ -118,7 +117,6 @@ struct ContentView: View {
 		addAppStateListener(appState.$isSelected, listenerType: .frontEnd)
 		addAppStateListener(appState.$wordSource, listenerType: .frontEnd)
 		addAppStateListener(appState.$wordSourceWasSelected, listenerType: .frontEnd)
-		
 	}
 	
 	@State var version = 1
