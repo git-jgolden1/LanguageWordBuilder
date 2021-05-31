@@ -161,11 +161,13 @@ struct ContentView: View {
 			HStack {
 				Button("Spanish") {
 					appState.wordSource = spanishWordSource
+					chooseNewWord()
 					appState.wordSourceWasSelected = true
 					print("tapped Spanish")
 				}
 				Button("Tagalog") {
 					appState.wordSource = tagalogWordSource
+					chooseNewWord()
 					appState.wordSourceWasSelected = true
 					print("tapped Tagalog")
 				}

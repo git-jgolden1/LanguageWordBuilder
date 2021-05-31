@@ -21,9 +21,7 @@ struct LanguageWordBuilderApp: App {
 	}
 	init() {
 		loadModel()
-		if !appStateDB.initialized {
-			chooseNewWord()
-		}
+		
 	}
 }
 
