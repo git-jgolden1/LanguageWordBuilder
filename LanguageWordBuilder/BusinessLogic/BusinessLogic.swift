@@ -29,7 +29,7 @@ func scrambleLetters() {
 }
 
 func updateColumns() {
-	let dividing = Double(appState.scrambledLetters.count) / 7
+	let dividing = Double(appState.scrambledLetters.count) / 6
 	let extractedCeil = Int(ceil(dividing))
 	appState.numberOfColumns = extractedCeil
 	if appState.scrambledLetters.count > 3 && appState.numberOfColumns == 1 {
@@ -90,6 +90,5 @@ func findButtonIndex(letter: String, whenSelected: Bool) -> Int {
 			break
 		}
 	}
-	assert(index != nil)
 	return index!
 }

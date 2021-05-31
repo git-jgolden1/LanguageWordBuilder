@@ -148,7 +148,7 @@ struct ContentView: View {
 			
 			Text(appState.currentAnswer)
 				.font(.title)
-				.frame(minHeight: 40)
+				.frame(minHeight: 32)
 			
 			hintAndSkipButtons()
 			Spacer()
