@@ -1,14 +1,12 @@
 //
-//  personalNotes.swift
+//  Notes.swift
 //  LanguageWordBuilder
 //
 //  Created by Jonathan Gurr on 12/17/20.
 //
 /*
 Tasks:
-1. Make the app persistent
+1. Make startingView only appear when language is not selected
 2. Make a settings tab where I can change the language
 
-Bugs:
-1: 
 */
