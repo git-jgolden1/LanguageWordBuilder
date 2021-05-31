@@ -39,6 +39,7 @@ func saveModel() {
 	for letter in appState.scrambledLetters {
 		appStateDB.scrambledLetters += letter
 	}
+	appStateDB.wordSourceWasSelected = appState.wordSourceWasSelected
 	appStateDB.save()
 }
 
@@ -58,11 +59,11 @@ func loadModel() {
 			print("invalid string value for isSelected appStateDB")
 		}
 	}
-
 	appState.numberOfColumns = Int(appStateDB.numberOfColumns)
 	appState.score = Int(appStateDB.score)
 	appState.scrambledLetters = [String]()
 	for c in appStateDB.scrambledLetters {
 		appState.scrambledLetters.append(String(c))
   }
+	appState.wordSourceWasSelected = appStateDB.wordSourceWasSelected
 }

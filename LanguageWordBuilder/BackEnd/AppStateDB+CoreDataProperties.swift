@@ -26,6 +26,7 @@ extension AppStateDB {
 	@NSManaged public var scrambledLetters: String
 	@NSManaged public var numberOfColumns: Int16
 	@NSManaged public var isSelected: String
+	@NSManaged public var wordSourceWasSelected: Bool
 }
 
 extension AppStateDB : Identifiable {
