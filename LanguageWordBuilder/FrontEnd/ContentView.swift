@@ -50,6 +50,15 @@ fileprivate func allLetterButtons() -> some View {
 	}
 }
 
+fileprivate func quitButton(alert showingQuitAlert: Binding<Bool>) -> some View {
+	return Button(action: {
+		showingQuitAlert.wrappedValue = true
+	}) {
+		Text("Quit")
+			.fontWeight(.bold)
+			.foregroundColor(Color.red)
+	}
+}
 
 fileprivate func hintButton() -> some View {
 	return Button(action: {
@@ -89,12 +98,12 @@ fileprivate func skipButton() -> some View {
 	}
 }
 
-fileprivate func hintAndSkipButtons() -> some View {
+fileprivate func bottomButtons(alert showingQuitAlert: Binding<Bool>) -> some View {
 	return HStack {
 		Spacer()
-		
+		quitButton(alert: showingQuitAlert)
+		Spacer()
 		hintButton()
-		
 		Spacer()
 		skipButton()
 		Spacer()
@@ -121,6 +130,7 @@ struct ContentView: View {
 	
 	@State var version = 1
 	@State var showingWordReportAlert = false
+	@State var showingQuitAlert = false
 	
 	func refresh() {
 		version += 1
@@ -135,6 +145,11 @@ struct ContentView: View {
 			
 			HStack {
 				Spacer()
+					.alert(isPresented: $showingQuitAlert) {
+						Alert(title: Text("Are you sure you want to quit?"), message: Text("All progress will be lost!"), primaryButton: .cancel(Text("No")), secondaryButton: .default(Text("Yes")) {
+								quit()
+						})
+					}
 				allLetterButtons()
 					.alert(isPresented: $showingWordReportAlert) {
 						Alert(title: Text("Good job!"), message: Text("\(words[appState.currentWordIndex].questionDescription) means \(words[appState.currentWordIndex].answer)"), dismissButton: .default(Text("OK! 👍")) {
@@ -150,7 +165,7 @@ struct ContentView: View {
 				.font(.title)
 				.frame(minHeight: 32)
 			
-			hintAndSkipButtons()
+			bottomButtons(alert: $showingQuitAlert)
 			Spacer()
 		}
 	}

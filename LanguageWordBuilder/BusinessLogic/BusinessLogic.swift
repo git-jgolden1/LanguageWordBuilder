@@ -92,3 +92,7 @@ func findButtonIndex(letter: String, whenSelected: Bool) -> Int {
 	}
 	return index!
 }
+
+func quit() {
+	appState = AppState()
+}

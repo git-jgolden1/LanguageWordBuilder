@@ -35,6 +35,7 @@ class AppState {
 	@WrappedObservable var numberOfColumns = 2
 	@WrappedObservable var isSelected = [Bool]()
 	@WrappedObservable var showingWordReportAlert = false
+	@WrappedObservable var showingQuitAlert = false
 	@WrappedObservable var wordSource = spanishWordSource
 	@WrappedObservable var wordSourceWasSelected = false
 
