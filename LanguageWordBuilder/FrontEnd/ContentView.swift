@@ -54,7 +54,7 @@ fileprivate func quitButton(alert showingQuitAlert: Binding<Bool>) -> some View 
 	return Button(action: {
 		showingQuitAlert.wrappedValue = true
 	}) {
-		Text("Quit")
+		Text("<- Quit")
 			.fontWeight(.bold)
 			.foregroundColor(Color.red)
 	}
@@ -165,6 +165,8 @@ struct ContentView: View {
 				.font(.title)
 				.frame(minHeight: 32)
 			
+			Spacer()
+			
 			bottomButtons(alert: $showingQuitAlert)
 			Spacer()
 		}
@@ -184,6 +186,7 @@ struct ContentView: View {
 					appState.wordSource = tagalogWordSource
 					chooseNewWord()
 					appState.wordSourceWasSelected = true
+					
 					print("tapped Tagalog")
 				}
 			}

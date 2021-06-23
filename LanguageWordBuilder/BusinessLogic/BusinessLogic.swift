@@ -94,5 +94,6 @@ func findButtonIndex(letter: String, whenSelected: Bool) -> Int {
 }
 
 func quit() {
-	appState = AppState()
+	appState.reset()
 }
+
