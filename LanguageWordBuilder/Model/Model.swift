@@ -39,6 +39,10 @@ class AppState {
 	@WrappedObservable var wordSource = spanishWordSource
 	@WrappedObservable var wordSourceWasSelected = false
 
+	func reset() {
+		wordSourceWasSelected = false
+		score = 0
+	}
 }
 
 
