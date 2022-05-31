@@ -66,7 +66,8 @@ func selectLetter(_ absoluteIndex: Int) {
 	}
 	if appState.currentAnswer == appState.currentWord.answer {
 		appState.score += 1
-		appState.showingWordReportAlert = true
+		// appState.showingWordReportAlert = true
+		chooseNewWord()
 	}
 }
 

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D71EC7FE258C616D008E8502 /* Notes in Sources */ = {isa = PBXBuildFile; fileRef = D71EC7FD258C616D008E8502 /* Notes */; };
 		D73B9D4025221A3B0037FD9C /* LanguageWordBuilderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73B9D3F25221A3B0037FD9C /* LanguageWordBuilderApp.swift */; };
 		D73B9D4225221A3B0037FD9C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73B9D4125221A3B0037FD9C /* ContentView.swift */; };
 		D73B9D4425221A3E0037FD9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D73B9D4325221A3E0037FD9C /* Assets.xcassets */; };
@@ -47,7 +46,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D71EC7FD258C616D008E8502 /* Notes */ = {isa = PBXFileReference; lastKnownFileType = text; path = Notes; sourceTree = "<group>"; };
 		D73B9D3C25221A3B0037FD9C /* LanguageWordBuilder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LanguageWordBuilder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D73B9D3F25221A3B0037FD9C /* LanguageWordBuilderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageWordBuilderApp.swift; sourceTree = "<group>"; };
 		D73B9D4125221A3B0037FD9C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -130,7 +128,6 @@
 				D76E5995259E079F0028D440 /* Languages */,
 				D7E6CAEB25D4178300636507 /* Utilities */,
 				D7C7EAC325B5DC6000B22D8B /* Controller */,
-				D71EC7FD258C616D008E8502 /* Notes */,
 				D73B9D4325221A3E0037FD9C /* Assets.xcassets */,
 				D73B9D4D25221A3E0037FD9C /* Info.plist */,
 				D73B9D4525221A3E0037FD9C /* Preview Content */,
@@ -367,7 +364,6 @@
 				D76E598E259E06B00028D440 /* Model.swift in Sources */,
 				D76E5998259E09A70028D440 /* BusinessLogic.swift in Sources */,
 				D75C7A8C256FE24200FA22ED /* SpanishWords.swift in Sources */,
-				D71EC7FE258C616D008E8502 /* Notes in Sources */,
 				D73B9D4025221A3B0037FD9C /* LanguageWordBuilderApp.swift in Sources */,
 				D7E23D9025FF9ABD006A9F51 /* AppStateDB+CoreDataClass.swift in Sources */,
 				D7D794DB25B86F4600A57199 /* WrappedObservable.swift in Sources */,
@@ -529,9 +525,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"LanguageWordBuilder/Preview Content\"";
-				DEVELOPMENT_TEAM = QAH6B934V7;
+				DEVELOPMENT_TEAM = CUPYM3WLYW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = LanguageWordBuilder/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -541,6 +538,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jonathangurr.LanguageWordBuilder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -551,9 +549,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"LanguageWordBuilder/Preview Content\"";
-				DEVELOPMENT_TEAM = QAH6B934V7;
+				DEVELOPMENT_TEAM = CUPYM3WLYW;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = LanguageWordBuilder/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -563,6 +562,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.jonathangurr.LanguageWordBuilder;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
