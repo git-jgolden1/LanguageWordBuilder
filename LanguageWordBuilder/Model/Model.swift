@@ -20,6 +20,7 @@ class AppState {
 	@WrappedObservable var score = 0
 	@WrappedObservable var currentAnswer = ""
 	var currentWord: Word {
+		print("Current word index is: \(currentWordIndex)")
 		var result: Word
 		if wordOrder == .nativeToForeign {
 			result = words[currentWordIndex]
