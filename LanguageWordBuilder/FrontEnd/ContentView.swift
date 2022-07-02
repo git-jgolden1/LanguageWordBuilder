@@ -129,7 +129,6 @@ struct ContentView: View {
 	}
 	
 	@State var version = 1
-	@State var showingWordReportAlert = false
 	@State var showingQuitAlert = false
 	
 	func refresh() {
@@ -151,12 +150,6 @@ struct ContentView: View {
 						})
 					}
 				allLetterButtons()
-					.alert(isPresented: $showingWordReportAlert) {
-						Alert(title: Text("Good job!"), message: Text("\(words[appState.currentWordIndex].questionDescription) means \(words[appState.currentWordIndex].answer)"), dismissButton: .default(Text("OK! 👍")) {
-							appState.showingWordReportAlert = false
-							chooseNewWord()
-						})
-					}
 			}
 			
 			Spacer()
@@ -208,11 +201,7 @@ struct ContentView: View {
 					.collect(.byTime(RunLoop.main, .milliseconds(stateChangeCollectionTime)))
 			) { _ in
 				print("onReceive")
-				if appState.showingWordReportAlert != showingWordReportAlert {
-					showingWordReportAlert = appState.showingWordReportAlert
-				} else {
-					refresh()
-				}
+				refresh()
 			}
 		}
 	}
