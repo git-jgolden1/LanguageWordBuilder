@@ -21,7 +21,6 @@ struct LanguageWordBuilderApp: App {
 	}
 	init() {
 		loadModel()
-		
 	}
 }
 

@@ -7,6 +7,13 @@
 
 import CoreData
 
+// PersistenceController.shared
+// PersistenceController.context # CANT DO THIS
+// myPC.context # OK
+// yourPC.context # NOT THE SAME
+// myPC.shared # NOT REALLY OK
+// yourPC.shared # SAME AS ABOVE
+
 public struct PersistenceController {
 	static let shared = PersistenceController()
 	
